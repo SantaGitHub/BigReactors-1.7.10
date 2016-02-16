@@ -124,6 +124,7 @@ public class RadiationHelper {
 	}
 	
 	private void performIrradiation(World world, RadiationData data, RadiationPacket radiation, int x, int y, int z) {
+		if(!world.getChunkProvider().chunkExists(x>>4,z>>4))return;
 		TileEntity te = world.getTileEntity(x, y, z);
 		if(te instanceof IRadiationModerator) {
 			((IRadiationModerator)te).moderateRadiation(data, radiation);
