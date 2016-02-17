@@ -20,7 +20,7 @@ Alpha / Unofficial
 
 Big Reactors is in an alpha state. The major features exist, and there are no _known_ serious bugs. However, it's not fully balanced. I'm only one guy - I can't totally break all the combinations you crazy folks will discover. The internal radiation/power production simulation is very complicated.
 
-You can download the latest alpha/unofficial versions from [the Github Repo's release page](https://github.com/Tomson124/BigReactors/releases).
+You can download the latest alpha/unofficial versions from [the Github Repo's release page](https://github.com/CyberdyneCC/BigReactors/releases).
 
 _You will need other mods_ to play with Big Reactors. This is just a power-generation mod, so you will need a mod that supports the Redstone Flux (RF) power system. I personally recommend [Thermal Expansion](http://teamcofh.com/thermal-expansion).
 
