@@ -52,6 +52,7 @@ public class BRLoader {
 		BigReactors.registerFluids(0,  true);
 		BigReactors.registerCreativeParts(0, true);
 		BigReactors.registerItems();
+		BigReactors.init();
 
 		StandardReactants.register();
 		

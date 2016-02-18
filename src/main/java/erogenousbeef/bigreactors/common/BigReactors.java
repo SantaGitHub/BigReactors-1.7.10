@@ -3,6 +3,7 @@ package erogenousbeef.bigreactors.common;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import erogenousbeef.bigreactors.common.multiblock.block.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -41,13 +42,6 @@ import erogenousbeef.bigreactors.common.item.ItemBlockBigReactors;
 import erogenousbeef.bigreactors.common.item.ItemIngot;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockReactor;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockTurbine;
-import erogenousbeef.bigreactors.common.multiblock.block.BlockFuelRod;
-import erogenousbeef.bigreactors.common.multiblock.block.BlockMBCreativePart;
-import erogenousbeef.bigreactors.common.multiblock.block.BlockMultiblockGlass;
-import erogenousbeef.bigreactors.common.multiblock.block.BlockReactorPart;
-import erogenousbeef.bigreactors.common.multiblock.block.BlockReactorRedstonePort;
-import erogenousbeef.bigreactors.common.multiblock.block.BlockTurbinePart;
-import erogenousbeef.bigreactors.common.multiblock.block.BlockTurbineRotorPart;
 import erogenousbeef.bigreactors.common.multiblock.helpers.RadiationHelper;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorAccessPort;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorComputerPort;
@@ -566,6 +560,11 @@ public class BigReactors {
 		}
 
 		return new ItemStack(ingotGeneric);
+	}
+
+	public static final BlockExchangerPart exchangerPart = new BlockExchangerPart(Material.iron);
+	public static void init() {
+		GameRegistry.registerBlock(exchangerPart, "BRExchangerPart");
 	}
 
 
