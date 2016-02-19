@@ -1,6 +1,7 @@
 package erogenousbeef.bigreactors.common.multiblock.block;
 
 import erogenousbeef.bigreactors.common.BigReactors;
+import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityExchangerPartStandard;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
@@ -20,6 +21,6 @@ public class BlockExchangerPart extends BlockContainer {
 
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        return null;
+        return new TileEntityExchangerPartStandard();
     }
 }
