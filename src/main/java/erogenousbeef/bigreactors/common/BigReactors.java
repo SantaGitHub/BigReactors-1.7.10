@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import erogenousbeef.bigreactors.common.multiblock.block.*;
+import erogenousbeef.bigreactors.common.multiblock.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -43,23 +44,6 @@ import erogenousbeef.bigreactors.common.item.ItemIngot;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockReactor;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockTurbine;
 import erogenousbeef.bigreactors.common.multiblock.helpers.RadiationHelper;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorAccessPort;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorComputerPort;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorControlRod;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorCoolantPort;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorFuelRod;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorGlass;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorPart;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorPowerTap;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorRedNetPort;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityReactorRedstonePort;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityTurbineComputerPort;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityTurbineFluidPort;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityTurbinePartGlass;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityTurbinePartStandard;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityTurbinePowerTap;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityTurbineRotorBearing;
-import erogenousbeef.bigreactors.common.multiblock.tileentity.TileEntityTurbineRotorPart;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.creative.TileEntityReactorCreativeCoolantPort;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.creative.TileEntityTurbineCreativeSteamGenerator;
 import erogenousbeef.bigreactors.common.tileentity.TileEntityCyaniteReprocessor;
@@ -474,6 +458,8 @@ public class BigReactors {
 			GameRegistry.registerTileEntity(TileEntityTurbineRotorPart.class, "BRTurbineRotorPart");
 			GameRegistry.registerTileEntity(TileEntityTurbineCreativeSteamGenerator.class, "BRTurbineCreativeSteamGenerator");
 
+            GameRegistry.registerTileEntity(TileEntityExchangerPartStandard.class, "BRExchangerPart"); //TODO: Add later
+
 			registeredTileEntities = true;
 		}
 	}
@@ -562,9 +548,20 @@ public class BigReactors {
 		return new ItemStack(ingotGeneric);
 	}
 
-	public static final BlockExchangerPart exchangerPart = new BlockExchangerPart(Material.iron);
-	public static void init() {
+	/**public static final BlockExchangerPart exchangerPart = new BlockExchangerPart(Material.iron);
+		public static void init() {
 		GameRegistry.registerBlock(exchangerPart, "BRExchangerPart");
+	}**/
+
+	public static BlockExchangerPart blockExchangerPart;
+	public static void registerExchangerPartBlocks(int id, boolean require) {
+		if(BigReactors.blockExchangerPart == null) {
+			BigReactors.blockExchangerPart = new BlockExchangerPart(Material.iron);
+			GameRegistry.registerBlock(BigReactors.blockExchangerPart, ItemBlockBigReactors.class, "BRExchangerPart");
+
+			OreDictionary.registerOre("exchangerCasing", BigReactors.blockExchangerPart.getExchangerCasingItemStack());
+			OreDictionary.registerOre("exchangerController", BigReactors.blockExchangerPart.getExchangerControllerItemStack());
+		}
 	}
 
 

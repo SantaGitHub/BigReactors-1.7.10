@@ -35,6 +35,10 @@ tile.blockTurbineRotorPart.1.name=Turbine Rotor Blade
 tile.blockMBCreativePart.0.name=Reactor Creative Coolant Port
 tile.blockMBCreativePart.1.name=Turbine Creative Steam Generator
 
+tile.blockExchangerPart.0.name=Exchanger Casing
+tile.blockExchangerPart.1.name=Exchanger Controller
+
+
 # Items
 item.ingotYellorium.name=Yellorium Ingot
 item.ingotCyanite.name=Cyanite Ingot

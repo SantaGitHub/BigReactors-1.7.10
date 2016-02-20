@@ -15,4 +15,6 @@ public abstract class TileEntityExchangerPartBase extends RectangularMultiblockT
     public Class<? extends MultiblockControllerBase> getMultiblockControllerType() {
         return MultiblockExchanger.class;
     }
+
+    public MultiblockExchanger getExchangerController() { return (MultiblockExchanger) this.getMultiblockController(); }
 }
