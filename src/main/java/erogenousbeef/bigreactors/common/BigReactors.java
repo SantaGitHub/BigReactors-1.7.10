@@ -548,11 +548,6 @@ public class BigReactors {
 		return new ItemStack(ingotGeneric);
 	}
 
-	/**public static final BlockExchangerPart exchangerPart = new BlockExchangerPart(Material.iron);
-		public static void init() {
-		GameRegistry.registerBlock(exchangerPart, "BRExchangerPart");
-	}**/
-
 	public static BlockExchangerPart blockExchangerPart;
 	public static void registerExchangerPartBlocks(int id, boolean require) {
 		if(BigReactors.blockExchangerPart == null) {
