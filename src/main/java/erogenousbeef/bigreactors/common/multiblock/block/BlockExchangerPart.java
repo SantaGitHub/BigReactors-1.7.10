@@ -69,11 +69,10 @@ public class BlockExchangerPart extends BlockContainer {
         IIcon icon = null;
         int metadata = blockAccess.getBlockMetadata(x,y,z);
 
-        if(metadata == METADATA_CASING) {
-            return getIcon(side, metadata);
-        }
-
         switch(metadata) {
+            case METADATA_CASING:
+                icon = getCasingIcon(blockAccess, x, y, z, side);
+                break;
             case METADATA_CONTROLLER:
                 icon = getControllerIcon(blockAccess, x, y, z, side);
                 break;
