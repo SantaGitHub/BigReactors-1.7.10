@@ -4,13 +4,16 @@ import cofh.api.energy.IEnergyProvider;
 import cofh.lib.util.helpers.ItemHelper;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import erogenousbeef.bigreactors.api.registry.ReactorInterior;
+import erogenousbeef.bigreactors.common.BRLog;
+import erogenousbeef.bigreactors.common.BigReactors;
 import erogenousbeef.bigreactors.common.interfaces.IMultipleFluidHandler;
 import erogenousbeef.bigreactors.common.interfaces.IReactorFuelInfo;
-import erogenousbeef.bigreactors.common.multiblock.block.BlockReactorPart;
+import erogenousbeef.bigreactors.common.multiblock.block.BlockExchangerPart;
 import erogenousbeef.bigreactors.common.multiblock.interfaces.IActivateable;
 import erogenousbeef.bigreactors.common.multiblock.interfaces.ITickableMultiblockPart;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.*;
 import erogenousbeef.bigreactors.net.CommonPacketHandler;
+import erogenousbeef.bigreactors.net.message.multiblock.ExchangerUpdateMessage;
 import erogenousbeef.core.multiblock.IMultiblockPart;
 import erogenousbeef.core.multiblock.MultiblockControllerBase;
 import erogenousbeef.core.multiblock.MultiblockValidationException;
@@ -68,20 +71,11 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
         updatePlayers.remove(playerToRemove);
     }
 
-    /**
-     * Sends a full state update to a player.
-     */
-    protected void sendIndividualUpdate(EntityPlayer player) {
-        if(this.worldObj.isRemote) { return; }
-
-        CommonPacketHandler.INSTANCE.sendTo(getUpdatePacket(), (EntityPlayerMP)player);
-    }
-
     @Override
     protected void onBlockAdded(IMultiblockPart part) {
-        if(part instanceof TileEntityReactorPart) {
+        if(part instanceof TileEntityExchangerPartStandard) {
             TileEntityExchangerPartStandard exchangerPart = (TileEntityExchangerPartStandard) part;
-            if(BlockReactorPart.isController(exchangerPart.getBlockMetadata())) {
+            if(BlockExchangerPart.isController(exchangerPart.getBlockMetadata())) {
                 attachedControllers.add(exchangerPart);
             }
         }
@@ -95,7 +89,7 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
     protected void onBlockRemoved(IMultiblockPart part) {
         if(part instanceof TileEntityExchangerPartStandard) {
             TileEntityExchangerPartStandard exchangerPart = (TileEntityExchangerPartStandard)part;
-            if(BlockReactorPart.isController(exchangerPart.getBlockMetadata())) {
+            if(BlockExchangerPart.isController(exchangerPart.getBlockMetadata())) {
                 attachedControllers.remove(exchangerPart);
             }
         }
@@ -245,11 +239,17 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
         setActive(buf.readBoolean());
     }
 
-    
+    protected IMessage getUpdatePacket() {
+        return new ExchangerUpdateMessage(this);
+    }
 
-    @Override
-    public void onAttachedPartWithMultiblockData(IMultiblockPart part, NBTTagCompound data) {
+    /**
+     * Sends a full state update to a player.
+     */
+    protected void sendIndividualUpdate(EntityPlayer player) {
+        if(this.worldObj.isRemote) { return; }
 
+        CommonPacketHandler.INSTANCE.sendTo(getUpdatePacket(), (EntityPlayerMP)player);
     }
 
     /**
@@ -265,6 +265,51 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
     }
 
     @Override
+    protected void onAssimilated(MultiblockControllerBase otherMachine) {
+        this.attachedTickables.clear();
+        this.attachedControllers.clear();
+    }
+
+    @Override
+    protected void onAssimilate(MultiblockControllerBase otherMachine) {
+        if(!(otherMachine instanceof MultiblockExchanger)) {
+            BRLog.warning("[%s] Heat Exchanger @ %s is attempting to assimilate a non-Heat Exchanger machine! That machine's data will be lost!", worldObj.isRemote?"CLIENT":"SERVER", getReferenceCoord());
+            return;
+        }
+
+        MultiblockExchanger otherExchanger = (MultiblockExchanger)otherMachine;
+    }
+
+    @Override
+    public void onAttachedPartWithMultiblockData(IMultiblockPart part, NBTTagCompound data) {
+        this.readFromNBT(data);
+    }
+
+    @Override
+    protected void onMachinePaused() {
+    }
+
+    @Override
+    protected void onMachineDisassembled() {
+        this.active = false;
+    }
+
+    @Override
+    protected int getMaximumXSize() {
+        return BigReactors.maximumExchangerSize;
+    }
+
+    @Override
+    protected int getMaximumZSize() {
+        return BigReactors.maximumExchangerSize;
+    }
+
+    @Override
+    protected int getMaximumYSize() {
+        return BigReactors.maximumExchangerHeight;
+    }
+
+    @Override
     public boolean getActive() {
         return this.active;
     }
@@ -276,41 +321,6 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
 
     @Override
     protected void onMachineRestored() {
-
-    }
-
-    @Override
-    protected void onMachinePaused() {
-
-    }
-
-    @Override
-    protected void onMachineDisassembled() {
-
-    }
-
-    @Override
-    protected int getMaximumXSize() {
-        return 0;
-    }
-
-    @Override
-    protected int getMaximumZSize() {
-        return 0;
-    }
-
-    @Override
-    protected int getMaximumYSize() {
-        return 0;
-    }
-
-    @Override
-    protected void onAssimilate(MultiblockControllerBase assimilated) {
-
-    }
-
-    @Override
-    protected void onAssimilated(MultiblockControllerBase assimilator) {
 
     }
 

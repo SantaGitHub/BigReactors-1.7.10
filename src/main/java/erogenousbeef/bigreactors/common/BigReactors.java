@@ -3,6 +3,7 @@ package erogenousbeef.bigreactors.common;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import erogenousbeef.bigreactors.common.multiblock.MultiblockExchanger;
 import erogenousbeef.bigreactors.common.multiblock.block.*;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.*;
 import net.minecraft.block.Block;
@@ -130,6 +131,9 @@ public class BigReactors {
 	
 	public static int maximumTurbineSize = 16;
 	public static int maximumTurbineHeight = 32;
+
+    public static int maximumExchangerSize = MultiblockExchanger.DIMENSION_UNBOUNDED;
+    public static int maximumExchangerHeight = MultiblockExchanger.DIMENSION_UNBOUNDED;
 	
 	public static float powerProductionMultiplier = 1.0f;
 	public static float fuelUsageMultiplier = 1.0f;
