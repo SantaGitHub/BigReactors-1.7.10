@@ -3,6 +3,7 @@ package erogenousbeef.bigreactors.common.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import erogenousbeef.bigreactors.common.tileentity.TileEntityLiquidizer;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import net.minecraft.block.material.Material;
@@ -38,9 +39,10 @@ import erogenousbeef.bigreactors.utils.StaticUtils;
 public class BlockBRDevice extends BlockCoFHBase {
 
 	public static final int META_CYANITE_REPROCESSOR = 0;
+	public static final int META_LIQUIDIZER = 1;
 	
 	public static final String[] _subBlocks = {
-		"cyaniteReprocessor"
+		"cyaniteReprocessor", "liquidizer"
 	};
 	
 	private IIcon[] _icons = new IIcon[_subBlocks.length];
@@ -130,6 +132,8 @@ public class BlockBRDevice extends BlockCoFHBase {
 		switch(metadata) {
 		case META_CYANITE_REPROCESSOR:
 			return new TileEntityCyaniteReprocessor();
+        case META_LIQUIDIZER:
+            return new TileEntityLiquidizer();
 		default:
 			throw new IllegalArgumentException("Unknown metadata for tile entity");
 		}
@@ -138,11 +142,16 @@ public class BlockBRDevice extends BlockCoFHBase {
 	public ItemStack getCyaniteReprocessorItemStack() {
 		return new ItemStack(this, 1, META_CYANITE_REPROCESSOR);
 	}
-	
+    public ItemStack getLiquidizerItemStack() {
+        return new ItemStack(this, 1, META_LIQUIDIZER);
+    }
+
 	@Override
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
-		par3List.add(this.getCyaniteReprocessorItemStack());
+        for(int metadata = 0; metadata < _subBlocks.length; metadata++) {
+            par3List.add(new ItemStack(this, 1, metadata));
+        }
 	}
 
 	@Override
