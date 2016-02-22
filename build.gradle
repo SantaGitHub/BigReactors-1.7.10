@@ -44,7 +44,7 @@ repositories {
     }
     ivy {
         name "CoFHCore"
-        artifactPattern "http://addons-origin.cursecdn.com/files/2280/537/[module]-[revision].[ext]"
+        artifactPattern "http://addons-origin.cursecdn.com/files/2283/119/[module]-[revision].[ext]"
         name "BuildCraft"
         artifactPattern "http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision]-[classifier].[ext]"
     }
@@ -55,7 +55,7 @@ dependencies {
     //compile 'codechicken:NotEnoughItems:1.7.10-1.0.3.67:dev'
     compile name: "buildcraft", version: "7.1.14", classifier: "dev"
     compile 'li.cil.oc:OpenComputers:MC1.7.10-1.6.+:api'
-    compile name: 'CoFHCore', version: '[1.7.10]3.1.1-324-dev', ext: 'jar'
+    compile name: 'CoFHCore', version: '[1.7.10]3.1.2-325-dev', ext: 'jar'
 }
 
 processResources
