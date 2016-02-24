@@ -6,6 +6,7 @@ import java.util.HashSet;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockExchanger;
 import erogenousbeef.bigreactors.common.multiblock.block.*;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.*;
+import erogenousbeef.bigreactors.common.tileentity.TileEntityLiquidizer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -463,6 +464,7 @@ public class BigReactors {
 			GameRegistry.registerTileEntity(TileEntityTurbineCreativeSteamGenerator.class, "BRTurbineCreativeSteamGenerator");
 
             GameRegistry.registerTileEntity(TileEntityExchangerPartStandard.class, "BRExchangerPart"); //TODO: Add later
+			GameRegistry.registerTileEntity(TileEntityLiquidizer.class, "BRLiquidizer");
 
 			registeredTileEntities = true;
 		}
@@ -649,7 +651,8 @@ public class BigReactors {
 			GameRegistry.registerBlock(BigReactors.blockDevice, ItemBlockBigReactors.class, "BRDevice");
 			
 			OreDictionary.registerOre("brDeviceCyaniteProcessor", ((BlockBRDevice)BigReactors.blockDevice).getCyaniteReprocessorItemStack());
-			
+			OreDictionary.registerOre("brDeviceLiquidizer", ((BlockBRDevice)BigReactors.blockDevice).getLiquidizerItemStack());
+
 			BRConfig.CONFIGURATION.save();
 		}
 	}
