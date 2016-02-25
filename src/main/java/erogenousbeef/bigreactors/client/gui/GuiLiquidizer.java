@@ -12,7 +12,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiLiquidizer extends BeefGuiDeviceBase {
-    private GuiButton _togglePort;
     private TileEntityLiquidizer _entity;
 
     private BeefGuiLabel titleString;
@@ -25,26 +24,27 @@ public class GuiLiquidizer extends BeefGuiDeviceBase {
         super(container, entity);
 
         _entity = entity;
-        xSize = 245;
-        ySize = 175;
+        xSize = 175;
+        ySize = 165;
     }
 
     @Override
     public void initGui() {
         super.initGui();
 
-        titleString = new BeefGuiLabel(this, _entity.getInventoryName(), guiLeft + 8, guiTop + 6);
+        titleString = new BeefGuiLabel(this, _entity.getInventoryName(), guiLeft + 76, guiTop + 8);
 
-        fluidBar = new BeefGuiFluidBar(this, guiLeft + 8, guiTop + 16, _entity, 0);
+        /*fluidBar = new BeefGuiFluidBar(this, guiLeft + 33, guiTop + 9, _entity, 0);
         powerBar = new BeefGuiPowerBar(this, guiLeft + 148, guiTop + 16, _entity);
         progressArrow = new BeefGuiProgressArrow(this, guiLeft + 76, guiTop + 41, 0, 178, _entity);
 
+*/
         registerControl(titleString);
+        /*registerControl(fluidBar);
         registerControl(powerBar);
-        registerControl(fluidBar);
         registerControl(progressArrow);
 
-        createInventoryExposureButtons(guiLeft + 180, guiTop + 4);
+        createInventoryExposureButtons(guiLeft + 180, guiTop + 4);*/
     }
 
     @Override
@@ -60,11 +60,6 @@ public class GuiLiquidizer extends BeefGuiDeviceBase {
     @Override
     public void drawScreen(int mouseX, int mouseY, float gameTicks) {
         super.drawScreen(mouseX, mouseY, gameTicks);
-    }
-
-    @Override
-    protected void actionPerformed(GuiButton button) {
-        super.actionPerformed(button);
     }
 
     @Override

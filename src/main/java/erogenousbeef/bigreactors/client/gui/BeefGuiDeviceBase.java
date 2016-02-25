@@ -80,7 +80,7 @@ public abstract class BeefGuiDeviceBase extends BeefGuiBase {
 		BlockBRDevice deviceBlock = (BlockBRDevice)BigReactors.blockDevice;
 		for(int side = 0; side < 6; side++) {
 			if(side == facing) { continue; }
-			exposureButtons[side].setIcon( deviceBlock.getIconFromTileEntity(_entity, BlockBRDevice.META_CYANITE_REPROCESSOR, side) );
+			/*exposureButtons[side].setIcon( deviceBlock.getIconFromTileEntity(_entity, BlockBRDevice.META_CYANITE_REPROCESSOR, side) );*/
 		}
 	}
 }
