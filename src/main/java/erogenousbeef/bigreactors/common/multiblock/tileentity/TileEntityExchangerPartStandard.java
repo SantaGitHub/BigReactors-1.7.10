@@ -85,16 +85,6 @@ public class TileEntityExchangerPartStandard extends TileEntityExchangerPartBase
     }
 
     @Override
-    public float getHeat() {
-        return 0;
-    }
-
-    @Override
-    public float getThermalConductivity() {
-        return 0;
-    }
-
-    @Override
     public Object getContainer(InventoryPlayer inventoryPlayer) {
         return null;
     }

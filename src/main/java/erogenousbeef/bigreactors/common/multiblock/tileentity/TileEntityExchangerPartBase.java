@@ -1,8 +1,12 @@
 package erogenousbeef.bigreactors.common.multiblock.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import erogenousbeef.bigreactors.api.IHeatEntity;
 import erogenousbeef.bigreactors.api.IRadiationModerator;
 import erogenousbeef.bigreactors.common.BRLog;
+import erogenousbeef.bigreactors.common.data.RadiationData;
+import erogenousbeef.bigreactors.common.data.RadiationPacket;
 import erogenousbeef.bigreactors.common.interfaces.IBeefDebuggableTile;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockExchanger;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockReactor;
@@ -11,6 +15,7 @@ import erogenousbeef.bigreactors.common.multiblock.interfaces.IMultiblockGuiHand
 import erogenousbeef.core.common.CoordTriplet;
 import erogenousbeef.core.multiblock.MultiblockControllerBase;
 import erogenousbeef.core.multiblock.rectangular.RectangularMultiblockTileEntityBase;
+import net.minecraft.entity.player.InventoryPlayer;
 
 public abstract class TileEntityExchangerPartBase extends RectangularMultiblockTileEntityBase implements IMultiblockGuiHandler,
                                                                                                             IHeatEntity,
@@ -53,6 +58,40 @@ public abstract class TileEntityExchangerPartBase extends RectangularMultiblockT
         if(worldObj.isRemote) {
             this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
+    }
+
+    // IMultiblockGuiHandler
+    /**
+     * @return The Container object for use by the GUI. Null if there isn't any.
+     */
+    @Override
+    public Object getContainer(InventoryPlayer inventoryPlayer) {
+        return null;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public Object getGuiElement(InventoryPlayer inventoryPlayer) {
+        return null;
+    }
+
+    // IHeatEntity
+    @Override
+    public float getHeat() {
+        if(!this.isConnected()) { return 0f; }
+        return getExchangerController().getCoolantHeat();
+    }
+
+    @Override
+    public float getThermalConductivity() {
+        return IHeatEntity.conductivityIron;
+    }
+
+    // IRadiationModerator
+    @Override
+    public void moderateRadiation(RadiationData data, RadiationPacket radiation) {
+        // Discard all remaining radiation, sorry bucko
+        radiation.intensity = 0f;
     }
 
     // IActivateable

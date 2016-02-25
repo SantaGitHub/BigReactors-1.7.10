@@ -1,9 +1,7 @@
 package erogenousbeef.bigreactors.common.multiblock;
 
 import cofh.api.energy.IEnergyProvider;
-import cofh.lib.util.helpers.ItemHelper;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import erogenousbeef.bigreactors.api.registry.ReactorInterior;
 import erogenousbeef.bigreactors.common.BRLog;
 import erogenousbeef.bigreactors.common.BigReactors;
 import erogenousbeef.bigreactors.common.interfaces.IMultipleFluidHandler;
@@ -19,12 +17,8 @@ import erogenousbeef.core.multiblock.MultiblockControllerBase;
 import erogenousbeef.core.multiblock.MultiblockValidationException;
 import erogenousbeef.core.multiblock.rectangular.RectangularMultiblockControllerBase;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -33,10 +27,11 @@ import net.minecraftforge.fluids.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MultiblockExchanger extends RectangularMultiblockControllerBase implements IEnergyProvider, IReactorFuelInfo, IMultipleFluidHandler, IActivateable {
+public class MultiblockExchanger extends RectangularMultiblockControllerBase implements IEnergyProvider, IMultipleFluidHandler, IActivateable {
 
     // Game stuff - stored
     protected boolean active;
+    private float coolantHeat;
 
     // Lists of connected parts
     private Set<ITickableMultiblockPart> attachedTickables;
@@ -103,7 +98,7 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
     protected void isMachineWhole() throws MultiblockValidationException {
         // Ensure that there is at least one controller attached.
         if(attachedControllers.size() < 1) {
-            throw new MultiblockValidationException("Not enough controllers. Reactors require at least 1.");
+            throw new MultiblockValidationException("Not enough controllers. Heat Exchangers require at least 1.");
         }
 
         super.isMachineWhole();
@@ -152,55 +147,41 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
         }
     }
 
+    protected void addCoolantHeat(float additionalHeat) {
+        if(Float.isNaN(additionalHeat)) { return; }
+
+        coolantHeat += additionalHeat;
+        if(-0.00001f < coolantHeat & coolantHeat < 0.00001f) { coolantHeat = 0f; }
+    }
+
+    public float getCoolantHeat() { return coolantHeat; }
+
     @Override
     protected void isBlockGoodForInterior(World world, int x, int y, int z) throws MultiblockValidationException {
         if(world.isAirBlock(x, y, z)) { return; } // Air is OK
-
-        Material material = world.getBlock(x, y, z).getMaterial();
-        if(material == net.minecraft.block.material.MaterialLiquid.water) {
-            return;
-        }
-
-        Block block = world.getBlock(x, y, z);
-        if(block == Blocks.iron_block || block == Blocks.gold_block || block == Blocks.diamond_block || block == Blocks.emerald_block) {
-            return;
-        }
-
-        // Permit registered moderator blocks
-        int metadata = world.getBlockMetadata(x, y, z);
-
-        if(ReactorInterior.getBlockData(ItemHelper.oreProxy.getOreName(new ItemStack(block, 1, metadata))) != null) {
-            return;
-        }
-
-        // Permit TE fluids
-        if(block != null) {
-            if(block instanceof IFluidBlock) {
-                Fluid fluid = ((IFluidBlock)block).getFluid();
-                String fluidName = fluid.getName();
-                if(ReactorInterior.getFluidData(fluidName) != null) { return; }
-
-                throw new MultiblockValidationException(String.format("%d, %d, %d - The fluid %s is not valid for the reactor's interior", x, y, z, fluidName));
-            }
-            else {
-                throw new MultiblockValidationException(String.format("%d, %d, %d - %s is not valid for the reactor's interior", x, y, z, block.getLocalizedName()));
-            }
-        }
-        else {
-            throw new MultiblockValidationException(String.format("%d, %d, %d - Null block found, not valid for the reactor's interior", x, y, z));
-        }
+        //TODO: ADD Blocks
     }
 
     @Override
     public void writeToNBT(NBTTagCompound data) {
-        data.setBoolean("reactorActive", this.active);
+        data.setBoolean("exchangerActive", this.active);
+        data.setFloat("coolantHeat", coolantHeat);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound data) {
-        if(data.hasKey("reactorActive")) {
-            setActive(data.getBoolean("reactorActive"));
+        if(data.hasKey("exchangerActive")) {
+            setActive(data.getBoolean("exchangerActive"));
         }
+
+        if(data.hasKey("coolantHeat")) {
+            setCoolantHeat(data.getFloat("coolantHeat"));
+        }
+    }
+
+    public void setCoolantHeat(float newCoolantHeat) {
+        if(Float.isNaN(newCoolantHeat)) { coolantHeat = 0f; }
+        else { coolantHeat = newCoolantHeat; }
     }
 
     @Override
@@ -221,7 +202,7 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
 
     // Network & Storage methods
 	/*
-	 * Serialize a reactor into a given Byte buffer
+	 * Serialize a heat exchanger into a given Byte buffer
 	 * @param buf The byte buffer to serialize into
 	 */
     public void serialize(ByteBuf buf) {
@@ -231,8 +212,8 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
     }
 
     /*
-     * Deserialize a reactor's data from a given Byte buffer
-     * @param buf The byte buffer containing reactor data
+     * Deserialize a heat exchanger's data from a given Byte buffer
+     * @param buf The byte buffer containing heat exchanger data
      */
     public void deserialize(ByteBuf buf) {
         // Basic data
@@ -347,26 +328,6 @@ public class MultiblockExchanger extends RectangularMultiblockControllerBase imp
     @Override
     public FluidTankInfo[] getTankInfo() {
         return new FluidTankInfo[0];
-    }
-
-    @Override
-    public int getFuelAmount() {
-        return 0;
-    }
-
-    @Override
-    public int getWasteAmount() {
-        return 0;
-    }
-
-    @Override
-    public int getCapacity() {
-        return 0;
-    }
-
-    @Override
-    public int getFuelRodCount() {
-        return 0;
     }
 
     public String getDebugInfo() {

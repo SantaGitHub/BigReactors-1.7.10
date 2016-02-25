@@ -21,8 +21,11 @@ public class ContainerLiquidizer extends Container {
     }
 
     protected void addSlots() {
-        // Input Slot
+        // Input Slot 1
         addSlotToContainer(new SlotReactorInput(_entity, 0, 44, 41, false));
+
+        //Input Slot 2
+        addSlotToContainer(new SlotReactorInput(_entity, 0, 44, 23, false));
 
         // Output Slot
         addSlotToContainer(new SlotRemoveOnly(_entity, 1, 116, 41));

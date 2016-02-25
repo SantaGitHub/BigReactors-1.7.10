@@ -49,7 +49,7 @@ public class GuiLiquidizer extends BeefGuiDeviceBase {
 
     @Override
     public ResourceLocation getGuiBackground() {
-        return new ResourceLocation(BigReactors.GUI_DIRECTORY + "CyaniteReprocessor.png");
+        return new ResourceLocation(BigReactors.GUI_DIRECTORY + "Liquidizer.png");
     }
 
     @Override
