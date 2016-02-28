@@ -769,8 +769,8 @@ public class BigReactors {
 
 		Reactants.registerSolid("ingotBlutonium",  StandardReactants.blutonium);
 		
-		ItemStack blockYellorium = blockMetal.getItemStackForMaterial("Yellorium");
-		Reactants.registerSolid(blockYellorium, StandardReactants.yellorium, Reactants.standardSolidReactantAmount * 9);
+		//ItemStack blockYellorium = blockMetal.getItemStackForMaterial("Yellorium"); //TODO: FIX YELLORIUM BLOCK FUEL BUG
+		//Reactants.registerSolid(blockYellorium, StandardReactants.yellorium, Reactants.standardSolidReactantAmount * 9);
 
 		ItemStack blockBlutonium = blockMetal.getItemStackForMaterial("Blutonium");
 		Reactants.registerSolid(blockBlutonium, StandardReactants.blutonium, Reactants.standardSolidReactantAmount * 9);
@@ -896,7 +896,6 @@ public class BigReactors {
 			iconSteamFlowing = map.registerIcon(TEXTURE_NAME_PREFIX + "fluid.steam.flowing");
 		}
 	}
-
 
 	@SideOnly(Side.CLIENT)
 	public static void setNonBlockFluidIcons() {

@@ -1,15 +1,19 @@
 Big Reactors Changelog
 ======================
 
-Current Release (0.4.5)
+Current Release (0.4.5A)
+--------------------------------
+- Removed yelloriumBlock as ReactorFuel as workaround for fuel duplication bug
+
+Older Releases
+--------------
+### 0.4.5
 --------------------------------
 - Improved Russian lang. Thanks zlotnleo!
 - Added liquid Helium
 - Added Radiation Helper TE existance check --> less lag
 - Bugfix: ControlRod ClassCastException
 
-Older Releases
---------------
 ### 0.4.4-UNOFFICIAL
 - **Dependency**: Forge dependency update to **10.13.4.1614**
 - **Dependency**: CoFHCore dependency update to **3.1.1-324**
