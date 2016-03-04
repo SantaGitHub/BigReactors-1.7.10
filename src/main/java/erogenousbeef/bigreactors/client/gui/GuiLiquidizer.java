@@ -3,10 +3,7 @@ package erogenousbeef.bigreactors.client.gui;
 import erogenousbeef.bigreactors.common.BigReactors;
 import erogenousbeef.bigreactors.common.block.BlockBRDevice;
 import erogenousbeef.bigreactors.common.tileentity.TileEntityLiquidizer;
-import erogenousbeef.bigreactors.gui.controls.BeefGuiFluidBar;
-import erogenousbeef.bigreactors.gui.controls.BeefGuiLabel;
-import erogenousbeef.bigreactors.gui.controls.BeefGuiPowerBar;
-import erogenousbeef.bigreactors.gui.controls.BeefGuiProgressArrow;
+import erogenousbeef.bigreactors.gui.controls.*;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -16,8 +13,9 @@ public class GuiLiquidizer extends BeefGuiDeviceBase {
 
     private BeefGuiLabel titleString;
 
-    private BeefGuiPowerBar powerBar;
-    private BeefGuiFluidBar fluidBar;
+    private BeefGuiPowerBarSmall powerBarSmall;
+    private BeefGuiFluidBar fluidBar_in;
+    private BeefGuiFluidBar fluidBar_out;
     private BeefGuiProgressArrow progressArrow;
 
     public GuiLiquidizer(Container container, TileEntityLiquidizer entity) {
@@ -33,16 +31,20 @@ public class GuiLiquidizer extends BeefGuiDeviceBase {
         super.initGui();
 
         titleString = new BeefGuiLabel(this, _entity.getInventoryName(), guiLeft + 76, guiTop + 8);
+        powerBarSmall = new BeefGuiPowerBarSmall(this, guiLeft + 9, guiTop + 8, _entity); //x, y -1 more than u think :)
 
-        /*fluidBar = new BeefGuiFluidBar(this, guiLeft + 33, guiTop + 9, _entity, 0);
-        powerBar = new BeefGuiPowerBar(this, guiLeft + 148, guiTop + 16, _entity);
-        progressArrow = new BeefGuiProgressArrow(this, guiLeft + 76, guiTop + 41, 0, 178, _entity);
+        fluidBar_in = new BeefGuiFluidBar(this, guiLeft + 33, guiTop + 8, _entity, 0);
+        fluidBar_out = new BeefGuiFluidBar(this, guiLeft + 152, guiTop + 8, _entity, 1);
 
-*/
+        /*progressArrow = new BeefGuiProgressArrow(this, guiLeft + 76, guiTop + 41, 0, 178, _entity); */
+
         registerControl(titleString);
-        /*registerControl(fluidBar);
-        registerControl(powerBar);
-        registerControl(progressArrow);
+        registerControl(powerBarSmall);
+
+        registerControl(fluidBar_in);
+        registerControl(fluidBar_out);
+
+        /*registerControl(progressArrow);
 
         createInventoryExposureButtons(guiLeft + 180, guiTop + 4);*/
     }

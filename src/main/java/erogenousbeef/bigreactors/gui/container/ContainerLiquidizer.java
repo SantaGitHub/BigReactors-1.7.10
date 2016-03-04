@@ -25,10 +25,10 @@ public class ContainerLiquidizer extends Container {
         addSlotToContainer(new SlotReactorInput(_entity, 0, 78, 26, false));
 
         //Input Slot 2
-        addSlotToContainer(new SlotReactorInput(_entity, 0, 102, 26, false));
+        addSlotToContainer(new SlotReactorInput(_entity, 1, 102, 26, false));
 
         // Output Slot
-        addSlotToContainer(new SlotRemoveOnly(_entity, 1, 116, 41));
+        //addSlotToContainer(new SlotRemoveOnly(_entity, 2, 116, 41));
     }
 
     protected int getPlayerInventoryVerticalOffset()

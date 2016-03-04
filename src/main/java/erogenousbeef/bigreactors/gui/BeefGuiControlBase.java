@@ -1,5 +1,6 @@
 package erogenousbeef.bigreactors.gui;
 
+import erogenousbeef.bigreactors.common.BRLog;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 
@@ -26,7 +27,9 @@ public abstract class BeefGuiControlBase implements IBeefGuiControl {
 		this.height = height;
 		this.width = width;
 		visible = true;
-	}
+        BRLog.debug("height: " + this.height);
+    }
+
 
 	/**
 	 * Check if the mouse is over this control.

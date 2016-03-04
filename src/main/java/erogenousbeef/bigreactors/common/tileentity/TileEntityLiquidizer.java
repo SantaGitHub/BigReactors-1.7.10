@@ -31,7 +31,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredInventoryFluid {
     public static final int NUM_SLOTS = 2;
 
     public static final int FLUIDTANK_WATER = 0;
-    public static final int NUM_TANKS = 1;
+    public static final int NUM_TANKS = 2;
 
     protected static final int FLUID_CONSUMED = FluidContainerRegistry.BUCKET_VOLUME * 1;
     protected static final int INGOTS_CONSUMED = 2;
@@ -45,6 +45,16 @@ public class TileEntityLiquidizer extends TileEntityPoweredInventoryFluid {
         // Do not transmit energy from the internal buffer.
         m_ProvidesEnergy = false;
     }
+
+    /*int calc = 0;
+
+    public void calculate() {
+        ItemStack stack = getStackInSlot(SLOT_INLET_1);
+        if(stack != null && isItemValidForSlot(SLOT_INLET_1, stack)) {
+            calc += stack.stackSize;
+        }
+
+    }*/
 
     @Override
     public int getSizeInventory() {
