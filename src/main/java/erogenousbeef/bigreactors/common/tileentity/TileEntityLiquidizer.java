@@ -89,6 +89,12 @@ public class TileEntityLiquidizer extends TileEntityPoweredInventoryFluid {
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
+        //We will assume anything that is in a slot is valid, so just return whether the new input can be stacked with the current one
+        ItemStack currentStackInSlot = _inventories[slot];
+        if(currentStackInSlot != null) {
+            return currentStackInSlot.isItemEqual(itemstack);
+        }
+
         if(itemstack == null) { return true; }
 
         else if(slot == SLOT_INLET_1 || slot == SLOT_INLET_2) {
