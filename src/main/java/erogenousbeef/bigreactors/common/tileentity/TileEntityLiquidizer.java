@@ -1,10 +1,11 @@
 package erogenousbeef.bigreactors.common.tileentity;
 
-import cofh.core.util.oredict.OreDictionaryArbiter;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import erogenousbeef.bigreactors.api.recipes.ILiquidizerRecipe;
 import erogenousbeef.bigreactors.api.registry.Reactants;
 import erogenousbeef.bigreactors.client.gui.GuiLiquidizer;
+import erogenousbeef.bigreactors.common.recipes.LiquidizerRecipeManager;
 import erogenousbeef.bigreactors.common.tileentity.base.TileEntityPoweredInventoryFluid;
 import erogenousbeef.bigreactors.gui.container.ContainerLiquidizer;
 import erogenousbeef.bigreactors.utils.StaticUtils;
@@ -17,8 +18,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
-import java.util.ArrayList;
 
 public class TileEntityLiquidizer extends TileEntityPoweredInventoryFluid {
 
@@ -36,6 +35,12 @@ public class TileEntityLiquidizer extends TileEntityPoweredInventoryFluid {
 
     protected static final int MAX_ENERGY_STORE = 10000;
     protected static final int CYCLE_ENERGY_COST = 2000;
+
+    private ILiquidizerRecipe CURRENT_RECIPE;
+    private float currentResourceModifier;
+    private int fuelBurnTime = 0;
+    private int fuelTotalTime = 0;
+    private int fuelCurrentFerment = 0;
 
     public TileEntityLiquidizer() {
         super();
@@ -121,7 +126,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredInventoryFluid {
         if(consumeInputs()) {
             Fluid coolant = FluidRegistry.WATER; //TEST
             FluidStack coolantStack = new FluidStack(coolant, COOLANT_AMOUNT);
-            fill(FLUIDTANK_OUT,coolantStack, true);
+            fill(FLUIDTANK_OUT, coolantStack, true);
         }
         markChunkDirty();
     }
@@ -183,5 +188,22 @@ public class TileEntityLiquidizer extends TileEntityPoweredInventoryFluid {
     @Override
     public int getNumConfig(int i) {
         return 0;
+    }
+
+    private void checkRecipe() {
+        if (CURRENT_RECIPE != null) {
+            return;
+        }
+
+        ItemStack resource1 = getStackInSlot(SLOT_INLET_1);
+        ItemStack resource2 = getStackInSlot(SLOT_INLET_2);
+        FluidStack fluid = .getFluid();
+
+        CURRENT_RECIPE = LiquidizerRecipeManager.findMatchingRecipe(resource1, resource2, fluid);
+
+        if (CURRENT_RECIPE != null) {
+            decrStackSize(SLOT_INLET_1, 1);
+            decrStackSize(SLOT_INLET_2, 1);
+        }
     }
 }
