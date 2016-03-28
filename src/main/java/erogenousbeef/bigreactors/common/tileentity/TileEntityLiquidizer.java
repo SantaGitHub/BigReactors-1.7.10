@@ -197,7 +197,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredInventoryFluid {
 
         ItemStack resource1 = getStackInSlot(SLOT_INLET_1);
         ItemStack resource2 = getStackInSlot(SLOT_INLET_2);
-        FluidStack fluid = .getFluid();
+        FluidStack fluid = drain(FLUIDTANK_IN, FLUID_CONSUMED, false);
 
         CURRENT_RECIPE = LiquidizerRecipeManager.findMatchingRecipe(resource1, resource2, fluid);
 
