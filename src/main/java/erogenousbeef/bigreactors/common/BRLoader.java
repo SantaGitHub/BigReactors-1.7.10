@@ -32,6 +32,9 @@ public class BRLoader {
 	@Instance(MOD_ID)
 	public static BRLoader instance;
 
+	/** BigReactors Packet Pipeline */
+	public static PacketHandler packetHandler = new PacketHandler();
+
 	@SidedProxy(clientSide = "erogenousbeef.bigreactors.client.ClientProxy", serverSide = "erogenousbeef.bigreactors.common.CommonProxy")
 	public static CommonProxy proxy;
 	
@@ -73,6 +76,9 @@ public class BRLoader {
 	{
 		proxy.init();
 		BigReactors.register(this);
+
+		//Packet registrations
+		packetHandler.initialize();
 	}
 	
 	@EventHandler

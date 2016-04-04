@@ -185,7 +185,7 @@ public class Reactants {
 	 * Currently unused. Will be used for the fluid fueling cycle in later releases.
 	 * This method produces a fluidStack.amount : 1 ratio of fluid to reactant.
 	 * Generally, you should pass in fluidStacks with an amount set to 1.
-	 * @param fluidStack The fluid representing a unit of input to convert into reactant. Generally should be 1.
+	 * @param fluidStack The fluid representing a unit of inputs to convert into reactant. Generally should be 1.
 	 * @param reactantName The name of the reactant.
 	 */
 	public static void registerFluid(FluidStack fluidStack, String reactantName) {
@@ -204,7 +204,7 @@ public class Reactants {
 	 * Register a fluid as a valid reactant for the reactor.
 	 * Currently unused.
 	 * This method enforces a 1:1 ratio for fluid mB to reactant mB.
-	 * @param fluid The input fluid to convert to reactant.
+	 * @param fluid The inputs fluid to convert to reactant.
 	 * @param reactantName The name of the created reactant.
 	 */
 	public static void registerFluid(Fluid fluid, String reactantName) {

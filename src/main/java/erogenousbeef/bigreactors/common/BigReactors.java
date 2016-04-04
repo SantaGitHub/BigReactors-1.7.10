@@ -3,10 +3,13 @@ package erogenousbeef.bigreactors.common;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import cpw.mods.fml.common.SidedProxy;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockExchanger;
 import erogenousbeef.bigreactors.common.multiblock.block.*;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.*;
+import erogenousbeef.bigreactors.common.recipe.RecipeHandler;
 import erogenousbeef.bigreactors.common.tileentity.TileEntityLiquidizer;
+import erogenousbeef.bigreactors.utils.StaticUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -19,7 +22,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -53,6 +58,9 @@ import erogenousbeef.bigreactors.world.BRSimpleOreGenerator;
 import erogenousbeef.bigreactors.world.BRWorldGenerator;
 
 public class BigReactors {
+
+    /** BigReactors Packet Pipeline */
+    public static PacketHandler packetHandler = new PacketHandler();
 
 	public static final String NAME 	= "Big Reactors";
 	public static final String MODID	= "BigReactors";
@@ -258,6 +266,7 @@ public class BigReactors {
 			 * Register Recipes
 			 */
 			// Recipe Registry
+            RecipeHandler.addLiquidizerRecipe(new ItemStack(Blocks.dirt), new ItemStack(Blocks.sand), new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME * 1), new FluidStack(FluidRegistry.LAVA, FluidContainerRegistry.BUCKET_VOLUME * 1));
 			
 			// Yellorium
 			if (blockYelloriteOre != null)
@@ -479,7 +488,7 @@ public class BigReactors {
 			GameRegistry.registerBlock(BigReactors.blockYelloriteOre, ItemBlockBigReactors.class, "YelloriteOre");
 			ItemStack yelloriteStack = new ItemStack(blockYelloriteOre, 1);
 			OreDictionary.registerOre("oreYellorite", yelloriteStack);
-			OreDictionary.registerOre("oreYellorium", yelloriteStack); // For convenience of mods which fiddle with recipes
+			OreDictionary.registerOre("oreYellorium", yelloriteStack); // For convenience of mods which fiddle with recipe
 		}
 
 		if(blockMetal == null) {

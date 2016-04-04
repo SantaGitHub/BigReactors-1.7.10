@@ -1,7 +1,9 @@
 package erogenousbeef.bigreactors.common.tileentity;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import erogenousbeef.bigreactors.common.recipe.RecipeHandler;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -109,7 +111,7 @@ public class TileEntityCyaniteReprocessor extends TileEntityPoweredInventoryFlui
 			}
 		}
 		else {
-			// TODO: Make this query the input for the right type of output to create.
+			// TODO: Make this query the inputs for the right type of output to create.
 			ArrayList<ItemStack> candidates = OreDictionaryArbiter.getOres("ingotBlutonium");
 			if(candidates == null || candidates.isEmpty()) {
 				// WTF?

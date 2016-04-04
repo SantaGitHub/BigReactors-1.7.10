@@ -23,7 +23,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public interface IRedNetInputNode extends IRedNetConnection
 {
 	/**
-	 * Called when the input values to this block change. Only called if your block is connected in "All" mode.
+	 * Called when the inputs values to this block change. Only called if your block is connected in "All" mode.
 	 * Do not issue a network value update from inside this method call; it will be ignored. Issue your updates
 	 * on the next tick.
 	 * 
@@ -31,13 +31,13 @@ public interface IRedNetInputNode extends IRedNetConnection
 	 * @param x This block's X coordinate.
 	 * @param y This block's Y coordinate.
 	 * @param z This block's Z coordinate.
-	 * @param side The side the input values are being changed on.
-	 * @param inputValues The new set of input values. This array will be 16 elements long. Do not alter or cache.
+	 * @param side The side the inputs values are being changed on.
+	 * @param inputValues The new set of inputs values. This array will be 16 elements long. Do not alter or cache.
 	 */
 	public void onInputsChanged(World world, int x, int y, int z, ForgeDirection side, int[] inputValues);
 
 	/**
-	 * Called when the input value to this block changes. Only called if your block is connected in "Single" mode.
+	 * Called when the inputs value to this block changes. Only called if your block is connected in "Single" mode.
 	 * Do not issue a network value update from inside this method call; it will be ignored. Issue your updates
 	 * on the next tick.
 	 * 
@@ -45,8 +45,8 @@ public interface IRedNetInputNode extends IRedNetConnection
 	 * @param x This block's X coordinate.
 	 * @param y This block's Y coordinate.
 	 * @param z This block's Z coordinate.
-	 * @param side The side the input values are being changed on.
-	 * @param inputValue The new input value
+	 * @param side The side the inputs values are being changed on.
+	 * @param inputValue The new inputs value
 	 */
 	public void onInputChanged(World world, int x, int y, int z, ForgeDirection side, int inputValue);
 }

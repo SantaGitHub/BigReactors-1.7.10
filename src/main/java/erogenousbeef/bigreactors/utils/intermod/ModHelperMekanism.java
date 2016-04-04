@@ -58,7 +58,7 @@ public class ModHelperMekanism extends ModHelperBase {
 	/// Mekanism Compat - taken from Mekanism's API. Extracted to allow compat with last known green build.
 	/**
 	 * Add an Enrichment Chamber recipe. (Ore -> 2 Dust)
-	 * @param input - input ItemStack
+	 * @param input - inputs ItemStack
 	 * @param output - output ItemStack
 	 */
 	public static void addMekanismEnrichmentChamberRecipe(ItemStack input, ItemStack output)
@@ -74,7 +74,7 @@ public class ModHelperMekanism extends ModHelperBase {
 
 	/**
 	 * Add a Combiner recipe. (8 Dust + Cobble -> Ore)
-	 * @param input - input ItemStack
+	 * @param input - inputs ItemStack
 	 * @param output - output ItemStack
 	 */
 	public static void addMekanismCombinerRecipe(ItemStack input, ItemStack output)
@@ -90,7 +90,7 @@ public class ModHelperMekanism extends ModHelperBase {
 	
 	/**
 	 * Add a Crusher recipe. (Ingot -> Dust)
-	 * @param input - input ItemStack
+	 * @param input - inputs ItemStack
 	 * @param output - output ItemStack
 	 */
 	public static void addMekanismCrusherRecipe(ItemStack input, ItemStack output)

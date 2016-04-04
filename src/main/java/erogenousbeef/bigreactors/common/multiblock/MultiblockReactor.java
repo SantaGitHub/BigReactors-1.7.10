@@ -736,7 +736,7 @@ public class MultiblockReactor extends RectangularMultiblockControllerBase imple
 	 * Attempt to distribute a stack of ingots to a given access port, sensitive to the amount and type of ingots already in it.
 	 * @param port The port to which we're distributing ingots.
 	 * @param itemsToDistribute The stack of ingots to distribute. Will be modified during the operation and may be returned with stack size 0.
-	 * @param distributeToInputs Should we try to send ingots to input ports?
+	 * @param distributeToInputs Should we try to send ingots to inputs ports?
 	 * @return The number of waste items distributed, i.e. the differential in stack size for wasteToDistribute.
 	 */
 	private int tryDistributeItems(TileEntityReactorAccessPort port, ItemStack itemsToDistribute, boolean distributeToInputs) {
@@ -843,7 +843,7 @@ public class MultiblockReactor extends RectangularMultiblockControllerBase imple
 		
 		int amtAdded = 0;
 		
-		// Loop: Consume input reactants from all ports
+		// Loop: Consume inputs reactants from all ports
 		for(TileEntityReactorAccessPort port : attachedAccessPorts)
 		{
 			if(fuelContainer.getRemainingSpace() <= 0) { break; }

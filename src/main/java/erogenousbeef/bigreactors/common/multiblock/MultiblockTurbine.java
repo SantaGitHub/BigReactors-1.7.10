@@ -767,7 +767,7 @@ public class MultiblockTurbine extends RectangularMultiblockControllerBase imple
 		else {
 			Fluid fluid = FluidRegistry.getFluid(inputFluidID);
 			if(fluid == null) {
-				BRLog.warning("[CLIENT] Multiblock Turbine received an unknown fluid of type %d, setting input tank to empty", inputFluidID);
+				BRLog.warning("[CLIENT] Multiblock Turbine received an unknown fluid of type %d, setting inputs tank to empty", inputFluidID);
 				tanks[TANK_INPUT].setFluid(null);
 			}
 			else {

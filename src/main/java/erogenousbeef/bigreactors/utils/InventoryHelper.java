@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 public class InventoryHelper {
 	private IInventory inventory;
 
+    public static final int[] EMPTY = new int[] {};
+
 	public InventoryHelper(IInventory inventory) {
 		this.inventory = inventory;
 	}

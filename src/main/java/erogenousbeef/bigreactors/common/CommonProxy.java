@@ -2,6 +2,8 @@ package erogenousbeef.bigreactors.common;
 
 import java.util.Calendar;
 
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -147,7 +149,12 @@ public class CommonProxy {
 	@SubscribeEvent
 	public void setIcons(TextureStitchEvent.Post event) {
 	}
-	
+
+    public EntityPlayer getPlayer(MessageContext context)
+    {
+        return context.getServerHandler().playerEntity;
+    }
+
 	/// Mod Interoperability ///
 	void registerWithOtherMods() {
 		ModHelperBase modHelper;

@@ -49,7 +49,7 @@ public class TileEntityReactorAccessPort extends TileEntityReactorPart implement
 		isInlet = true;
 	}
 
-	// Return the name of the reactant to which the item in the input slot
+	// Return the name of the reactant to which the item in the inputs slot
 	public String getInputReactantType() {
 		ItemStack inputItem = getStackInSlot(SLOT_INLET);
 		if(inputItem == null) { return null; }
@@ -67,7 +67,7 @@ public class TileEntityReactorAccessPort extends TileEntityReactorPart implement
 	}
 
 	/**
-	 * Consume items from the input slot.
+	 * Consume items from the inputs slot.
 	 * Returns the amount of reactant produced.
 	 * @param reactantDesired The amount of reactant desired, in reactant units (mB)
 	 * @return The amount of reactant actually produced, in reactant units (mB)
