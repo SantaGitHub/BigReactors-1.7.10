@@ -6,6 +6,7 @@ import java.util.HashSet;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockExchanger;
 import erogenousbeef.bigreactors.common.multiblock.block.*;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.*;
+import erogenousbeef.bigreactors.common.recipe.RecipeHandler;
 import erogenousbeef.bigreactors.common.tileentity.TileEntityLiquidizer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -20,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -258,6 +260,8 @@ public class BigReactors {
 			 * Register Recipes
 			 */
 			// Recipe Registry
+
+            RecipeHandler.addLiquidizerRecipe(new ItemStack(Items.redstone), new FluidStack(FluidRegistry.WATER, 1000), new FluidStack(FluidRegistry.LAVA, 500));
 			
 			// Yellorium
 			if (blockYelloriteOre != null)

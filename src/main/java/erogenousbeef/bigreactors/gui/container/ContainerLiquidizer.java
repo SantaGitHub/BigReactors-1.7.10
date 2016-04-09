@@ -1,7 +1,7 @@
 package erogenousbeef.bigreactors.gui.container;
 
 import erogenousbeef.bigreactors.common.tileentity.TileEntityLiquidizer;
-import erogenousbeef.bigreactors.gui.slot.SlotReactorInput;
+import erogenousbeef.bigreactors.gui.slot.SlotMachineInput;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -20,11 +20,8 @@ public class ContainerLiquidizer extends Container {
     }
 
     protected void addSlots() {
-        // Input Slot 1
-        addSlotToContainer(new SlotReactorInput(_entity, 0, 78, 26, false));
-
-        //Input Slot 2
-        addSlotToContainer(new SlotReactorInput(_entity, 1, 102, 26, false));
+        // Input Slot
+        addSlotToContainer(new SlotMachineInput(_entity, 0, 90, 26));
     }
 
     protected int getPlayerInventoryVerticalOffset()

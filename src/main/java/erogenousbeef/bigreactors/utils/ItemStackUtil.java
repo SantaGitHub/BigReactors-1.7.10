@@ -9,6 +9,12 @@
  * SirSengir (original work), CovertJaguar, Player, Binnie, MysteriousAges
  ******************************************************************************/
 
+/*******************************************************************************
+ * Additions for BigReactors:
+ * Copyright (c) 2016 Tomson124.
+ * The MIT License (MIT)
+ ******************************************************************************/
+
 package erogenousbeef.bigreactors.utils;
 
 import net.minecraft.block.Block;
@@ -128,6 +134,62 @@ public abstract class ItemStackUtil {
             }
         }
         return false;
+    }
+
+    /**
+     * Compares two item stacks and their sizes
+     */
+    public static boolean contains(ItemStack container, ItemStack contained)
+    {
+        return isCraftingEquivalent(contained, container) && container.stackSize >= contained.stackSize;
+    }
+
+    /**
+     * Decreases the size of stack1 by the size of stack2
+     */
+    public static ItemStack subtract(ItemStack stack1, ItemStack stack2)
+    {
+        if(stack1 == null)
+        {
+            return null;
+        }
+        else if(stack2 == null)
+        {
+            return stack1;
+        }
+
+        return size(stack1, getSize(stack1)-getSize(stack2));
+    }
+
+    public static ItemStack size(ItemStack stack, int size)
+    {
+        if(size <= 0 || stack == null)
+        {
+            return null;
+        }
+
+        ItemStack ret = stack.copy();
+        ret.stackSize = size;
+        return ret;
+    }
+
+    public static int getSize(ItemStack stack)
+    {
+        return stack != null ? stack.stackSize : 0;
+    }
+
+    /**
+     * Hashes item stack
+     */
+    public static int hashItemStack(ItemStack stack)
+    {
+        if(stack == null || stack.getItem() == null)
+        {
+            return -1;
+        }
+
+        String name = stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItem().getUnlocalizedName(stack);
+        return name.hashCode() << 8 | stack.getItemDamage();
     }
 
     /**
