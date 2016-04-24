@@ -6,6 +6,7 @@ import erogenousbeef.bigreactors.common.power.IInternalPoweredTile;
 import erogenousbeef.bigreactors.common.power.PowerHandlerUtil;
 import erogenousbeef.bigreactors.common.recipe.SlotDefinition;
 import erogenousbeef.bigreactors.core.util.vecmath.VecmathUtil;
+import erogenousbeef.bigreactors.net.CommonPacketHandler;
 import erogenousbeef.bigreactors.net.PacketHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,7 +45,7 @@ public abstract class TileEntityPoweredBasicMachine extends TileEntityBasicMachi
         boolean powerChanged = (lastSyncPowerStored != storedEnergyRF && shouldDoWorkThisTick(5));
         if(powerChanged) {
             lastSyncPowerStored = storedEnergyRF;
-            PacketHandler.sendToAllAround(new PacketPowerStorage(this), this);
+            CommonPacketHandler.sendToAllAround(new PacketPowerStorage(this), this);
         }
     }
 

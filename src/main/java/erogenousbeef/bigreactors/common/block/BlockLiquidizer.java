@@ -6,6 +6,7 @@ import erogenousbeef.bigreactors.GuiHandler;
 import erogenousbeef.bigreactors.ModObject;
 import erogenousbeef.bigreactors.common.block.base.BlockMachine;
 import erogenousbeef.bigreactors.common.machine.IoMode;
+import erogenousbeef.bigreactors.common.recipe.SlotDefinition;
 import erogenousbeef.bigreactors.common.tileentity.liquidizer.*;
 import erogenousbeef.bigreactors.net.PacketHandler;
 import net.minecraft.client.Minecraft;

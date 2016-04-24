@@ -211,8 +211,9 @@ public abstract class BlockMachine<T extends TileEntityBasicMachine> extends Blo
         super.onBlockPlacedBy(world, x, y, z, player, stack);
         int heading = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         TileEntityBasicMachine te = (TileEntityBasicMachine) world.getTileEntity(x, y, z);
-        te.setFacing(getFacingForHeading(heading));
-        te.readFromItemStack(stack);
+            te.setFacing(getFacingForHeading(heading));
+            te.readFromItemStack(stack);
+
         if(world.isRemote) {
             return;
         }

@@ -29,7 +29,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredTask implements IFlui
     Fluid currentTaskInputFluid;
     Fluid currentTaskOutputFluid;
 
-    public TileEntityLiquidizer(SlotDefinition slotDefinition) {
+    public TileEntityLiquidizer() {
         super(new SlotDefinition(0, 1, -1, -1, -1, -1));
     }
 

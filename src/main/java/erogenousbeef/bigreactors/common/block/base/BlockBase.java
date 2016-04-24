@@ -70,7 +70,7 @@ public abstract class BlockBase extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iIconRegister) {
-        blockIcon = iIconRegister.registerIcon("enderio:" + name);
+        blockIcon = iIconRegister.registerIcon("bigreactors:" + name);
     }
 
   /* Subclass Helpers */
