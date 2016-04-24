@@ -138,26 +138,6 @@ public class GuiLiquidizer extends GuiPoweredMachineBase<TileEntityLiquidizer> {
             outputFluid = liquidizer.currentTaskOutputFluid;
         }
 
-        float mult;
-        ItemStack inStack = liquidizer.getStackInSlot(0);
-        if (inStack != null) {
-            mult = LiquidizerRecipeManager.instance.getMultiplierForInput(inputFluid, inStack, outputFluid);
-            if (mult > 0) {
-                String str = "x" + mult;
-                x = guiLeft + 63 - fontRendererObj.getStringWidth(str) / 2;
-                fontRendererObj.drawString(str, x, guiTop + 32, ColorUtil.getRGB(Color.gray), false);
-            }
-        }
-        /*inStack = liquidizer.getStackInSlot(1);
-        if (inStack != null) {
-            mult = LiquidizerRecipeManager.instance.getMultiplierForInput(inFluid, inStack, outputFluid);
-            if (mult > 0) {
-                String str = "x" + mult;
-                x = guiLeft + 113 - fontRendererObj.getStringWidth(str) / 2;
-                fontRendererObj.drawString(str, x, guiTop + 32, ColorUtil.getRGB(Color.gray), false);
-            }
-        }*/
-
         bindGuiTexture();
         super.drawGuiContainerBackgroundLayer(par1, par2, par3);
     }

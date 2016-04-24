@@ -132,7 +132,7 @@ public enum IconBR implements IWidgetIcon {
     public final int height;
     public final IconBR overlay;
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation("enderio:textures/gui/widgetsv2.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation("bigreactors:textures/gui/widgetsv2.png");
 
     public static final IWidgetMap map = new IWidgetMap.WidgetMapImpl(TEX_SIZE, TEXTURE) {
         @Override

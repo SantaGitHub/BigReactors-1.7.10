@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class GuiContainerBaseBR extends GuiContainerBase {
 
-    private static final String TEXTURE_PATH = ":textures/gui/23/";
+    private static final String TEXTURE_PATH = ":textures/gui/";
     private static final String TEXTURE_EXT = ".png";
 
     private final List<ResourceLocation> guiTextures = new ArrayList<ResourceLocation>();

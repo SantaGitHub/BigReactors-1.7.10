@@ -4,6 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import erogenousbeef.bigreactors.GuiHandler;
 import erogenousbeef.bigreactors.ModObject;
+import erogenousbeef.bigreactors.common.BRLoader;
+import erogenousbeef.bigreactors.common.BRLog;
 import erogenousbeef.bigreactors.common.block.base.BlockMachine;
 import erogenousbeef.bigreactors.common.machine.IoMode;
 import erogenousbeef.bigreactors.common.recipe.SlotDefinition;
@@ -114,15 +116,12 @@ public class BlockLiquidizer extends BlockMachine<TileEntityLiquidizer> {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
-        if(te instanceof TileEntityLiquidizer) {
-            return new GuiLiquidizer(player.inventory, (TileEntityLiquidizer) te);
-        }
-        return null;
+        return new GuiLiquidizer(player.inventory, (TileEntityLiquidizer) te);
     }
 
     @Override
     protected int getGuiId() {
-        return GuiHandler.GUI_ID_STILL;
+        return GuiHandler.GUI_ID_LIQUIDIZER;
     }
 
     @Override

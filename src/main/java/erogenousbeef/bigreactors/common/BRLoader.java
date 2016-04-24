@@ -1,5 +1,6 @@
 package erogenousbeef.bigreactors.common;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import erogenousbeef.bigreactors.GuiHandler;
 import erogenousbeef.bigreactors.core.util.Lang;
 import net.minecraft.block.Block;
@@ -79,6 +80,9 @@ public class BRLoader {
 	public void load(FMLInitializationEvent evt)
 	{
 		proxy.init();
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
+
 		BigReactors.register(this);
 	}
 	

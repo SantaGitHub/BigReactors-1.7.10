@@ -5,6 +5,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import erogenousbeef.bigreactors.common.BigReactors;
+import erogenousbeef.bigreactors.common.tileentity.liquidizer.PacketTanks;
 import erogenousbeef.bigreactors.core.network.PacketGhostSlot;
 import erogenousbeef.bigreactors.core.network.PacketProgress;
 import erogenousbeef.bigreactors.net.message.ControlRodChangeInsertionMessage;
@@ -64,6 +65,7 @@ public class CommonPacketHandler {
 
         INSTANCE.registerMessage(PacketProgress.Handler.class, PacketProgress.class, 1, Side.CLIENT);
         INSTANCE.registerMessage(PacketGhostSlot.Handler.class, PacketGhostSlot.class, 3, Side.SERVER);
+        INSTANCE.registerMessage(PacketTanks.class,PacketTanks.class,PacketHandler.nextID(), Side.CLIENT);
 
         // Client >> Server Messages
     	INSTANCE.registerMessage(MachineCommandActivateMessage.Handler.class, MachineCommandActivateMessage.class, 0, Side.SERVER);

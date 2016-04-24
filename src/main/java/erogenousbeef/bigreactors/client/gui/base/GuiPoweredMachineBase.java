@@ -35,7 +35,7 @@ public class GuiPoweredMachineBase <T extends TileEntityPoweredBasicMachine> ext
     }
 
     protected String getPowerOutputLabel() {
-        return StatCollector.translateToLocal("enderio.gui.max");
+        return StatCollector.translateToLocal("bigreactors.gui.max");
     }
 
     protected int getPowerOutputValue() {

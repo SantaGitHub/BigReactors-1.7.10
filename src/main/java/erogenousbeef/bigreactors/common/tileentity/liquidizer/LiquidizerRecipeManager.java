@@ -116,33 +116,4 @@ public class LiquidizerRecipeManager {
         }
         return false;
     }
-
-    public float getMultiplierForInput(Fluid inputFluid, ItemStack input, Fluid output) {
-        if (input != null || output != null) {
-            for (IRecipe recipe : recipes) {
-                RecipeOutput out = recipe.getOutputs()[0];
-                RecipeInput in = recipe.getInputs()[recipe.getInputs().length - 1];
-                if ((inputFluid == null || in.getFluidInput().getFluid().getID() == inputFluid.getID()) && (output == null || out.getFluidOutput().getFluid().getID() == output.getID())) {
-                    for (RecipeInput ri : recipe.getInputs()) {
-                        if (ri.isInput(input)) {
-                            return ri.getMulitplier();
-                        }
-                    }
-                }
-            }
-        }
-        // no fluid or not an input for this fluid: best guess
-        // (after all, the item IS in the input slot)
-        float found = -1f;
-        for (IRecipe recipe : recipes) {
-            for (RecipeInput ri : recipe.getInputs()) {
-                if (ri.isInput(input)) {
-                    if (found < 0f || found > ri.getMulitplier()) {
-                        found = ri.getMulitplier();
-                    }
-                }
-            }
-        }
-        return found > 0 ? found : 0;
-    }
 }

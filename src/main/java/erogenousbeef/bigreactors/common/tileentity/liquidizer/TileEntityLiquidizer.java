@@ -8,6 +8,7 @@ import erogenousbeef.bigreactors.common.tileentity.base.TileEntityPoweredTask;
 import erogenousbeef.bigreactors.core.util.BlockCoord;
 import erogenousbeef.bigreactors.core.util.FluidUtil;
 import erogenousbeef.bigreactors.core.util.ITankAccess;
+import erogenousbeef.bigreactors.net.CommonPacketHandler;
 import erogenousbeef.bigreactors.net.PacketHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -180,7 +181,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredTask implements IFlui
     protected boolean processTasks(boolean redstoneChecksPassed) {
         boolean res = super.processTasks(redstoneChecksPassed);
         if(tanksDirty && shouldDoWorkThisTick(10)) {
-            PacketHandler.sendToAllAround(new PacketTanks(this), this);
+            CommonPacketHandler.sendToAllAround(new PacketTanks(this), this);
             tanksDirty = false;
         }
         return res;

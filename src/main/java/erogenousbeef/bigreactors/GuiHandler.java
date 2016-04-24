@@ -23,7 +23,7 @@ public class GuiHandler implements IGuiHandler {
 
     public static final int GUI_ID_TRAVEL_ACCESSABLE = 18;
     public static final int GUI_ID_TRAVEL_AUTH = 19;
-    public static final int GUI_ID_STILL = 20;
+    public static final int GUI_ID_LIQUIDIZER = 1;
 
     protected final Map<Integer, IGuiHandler> guiHandlers = new HashMap<Integer, IGuiHandler>();
 
