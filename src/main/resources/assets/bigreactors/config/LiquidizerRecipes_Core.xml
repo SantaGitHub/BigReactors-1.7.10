@@ -1,0 +1,52 @@
+<!--
+ IMPORTANT:
+  This is the core recipe file. Modifying this file will have no effect. It will be rewritten by EnderIO and all
+  modifications made to it will be lost. To add or modify recipes please use 'VatRecipes_User.xml'. Recipes
+  are organized into named groups. A group of recipes can be disabled by setting the attribute 'enabled=false'. A
+  recipe group is composed of one or more recipes.
+
+  Vat recipes take two item inputs and one fluid input, and output a fluid.
+  The various values are calulcated like this:
+
+  For:
+  ingredient multiplier (IM) = slot0.multiplier * slot1.multiplier;
+
+  input fluid volume (mb) = IM * 1000
+
+  Produce:
+  output fluid volume (mb) = IM * inputFluid.multiplier * 1000.
+
+  The vat always uses 1 RF per tick, so energy cost also equates to duration.
+
+  Recipes can also be added using forge IMC messages. For example, in the init method of a mod:
+  String recipe =
+         "<recipeGroup name=\"cheaty\" >" +
+           "<recipe name=\"foo\" energyCost=\"2400\" >" +
+             "<input>" +
+              "<itemStack modID=\"minecraft\" itemName=\"dirt\" slot=\"0\" />" +
+              "<fluidStack name=\"water\" multiplier=\"1\" />" +
+             "</input>" +
+             "<output>" +
+               "<fluidStack name=\"lava\" />" +
+             "</output>" +
+            "</recipe>" +
+          "</recipeGroup>";
+  FMLInterModComms.sendMessage("BigReactors", "recipe:vat", recipe);
+
+-->
+
+<LiquidizerRecipes>
+
+  <recipeGroup name="BigReactors" > <!-- Required for EnderIO to function correctly. -->
+    <recipe name="Test" energyCost="1000" >
+      <input>
+        <itemStack modID="minecraft" itemName="redstone" slot="0" multiplier="1" />
+        <fluidStack name="water" multiplier="0.25" />
+      </input>
+      <output>
+        <fluidStack name="lava" />
+      </output>
+    </recipe>
+  </recipeGroup>
+
+</LiquidizerRecipes>

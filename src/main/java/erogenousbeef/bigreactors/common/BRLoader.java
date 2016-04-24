@@ -1,5 +1,7 @@
 package erogenousbeef.bigreactors.common;
 
+import erogenousbeef.bigreactors.GuiHandler;
+import erogenousbeef.bigreactors.core.util.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -34,6 +36,9 @@ public class BRLoader {
 
 	@SidedProxy(clientSide = "erogenousbeef.bigreactors.client.ClientProxy", serverSide = "erogenousbeef.bigreactors.common.CommonProxy")
 	public static CommonProxy proxy;
+
+    public static GuiHandler guiHandler = new GuiHandler();
+    public static final Lang lang = new Lang("bigreactors");
 	
 	@Mod.Metadata(MOD_ID)
 	public static ModMetadata metadata;
@@ -53,6 +58,8 @@ public class BRLoader {
 		BigReactors.registerCreativeParts(0, true);
 		BigReactors.registerItems();
 		BigReactors.registerExchangerPartBlocks(0, true);
+
+		BigReactors.registerMachines();
 
 		StandardReactants.register();
 		

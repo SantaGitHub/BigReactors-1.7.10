@@ -15,6 +15,8 @@ public class BRConfig {
 
 	public static final int WORLDGEN_VERSION = 1; // Bump this when changing world generation so the world regens
 
+	public static File configDirectory = new File(Loader.instance().getConfigDir(), "BigReactors");
+
 	/**
 	 * The Big Reactors configuration file.
 	 */

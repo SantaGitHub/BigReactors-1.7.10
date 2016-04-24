@@ -35,7 +35,6 @@ public class BREventHandler {
 		}
 		
 		ChunkCoordIntPair coordPair = loadEvent.getChunk().getChunkCoordIntPair();
-		BigReactors.tickHandler.addRegenChunk(loadEvent.world.provider.dimensionId, coordPair);
 	}
 	
 }

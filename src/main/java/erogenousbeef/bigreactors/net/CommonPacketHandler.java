@@ -1,9 +1,12 @@
 package erogenousbeef.bigreactors.net;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import erogenousbeef.bigreactors.common.BigReactors;
+import erogenousbeef.bigreactors.core.network.PacketGhostSlot;
+import erogenousbeef.bigreactors.core.network.PacketProgress;
 import erogenousbeef.bigreactors.net.message.ControlRodChangeInsertionMessage;
 import erogenousbeef.bigreactors.net.message.ControlRodChangeNameMessage;
 import erogenousbeef.bigreactors.net.message.ControlRodUpdateMessage;
@@ -24,6 +27,8 @@ import erogenousbeef.bigreactors.net.message.multiblock.TurbineChangeInductorMes
 import erogenousbeef.bigreactors.net.message.multiblock.TurbineChangeMaxIntakeMessage;
 import erogenousbeef.bigreactors.net.message.multiblock.TurbineChangeVentMessage;
 import erogenousbeef.bigreactors.net.message.multiblock.TurbineUpdateMessage;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
 
 public class CommonPacketHandler {
 
@@ -57,6 +62,9 @@ public class CommonPacketHandler {
         INSTANCE.registerMessage(ReactorUpdateWasteEjectionMessage.Handler.class, ReactorUpdateWasteEjectionMessage.class, 13, Side.CLIENT);
         INSTANCE.registerMessage(TurbineUpdateMessage.Handler.class, TurbineUpdateMessage.class, 15, Side.CLIENT);
 
+        INSTANCE.registerMessage(PacketProgress.Handler.class, PacketProgress.class, 1, Side.CLIENT);
+        INSTANCE.registerMessage(PacketGhostSlot.Handler.class, PacketGhostSlot.class, 3, Side.SERVER);
+
         // Client >> Server Messages
     	INSTANCE.registerMessage(MachineCommandActivateMessage.Handler.class, MachineCommandActivateMessage.class, 0, Side.SERVER);
         INSTANCE.registerMessage(DeviceChangeExposureMessage.Handler.class, DeviceChangeExposureMessage.class, 2, Side.SERVER);
@@ -71,5 +79,21 @@ public class CommonPacketHandler {
         INSTANCE.registerMessage(TurbineChangeMaxIntakeMessage.Handler.class, TurbineChangeMaxIntakeMessage.class, 20, Side.SERVER);
         INSTANCE.registerMessage(TurbineChangeVentMessage.Handler.class, TurbineChangeVentMessage.class, 22, Side.SERVER);
         INSTANCE.registerMessage(TurbineChangeInductorMessage.Handler.class, TurbineChangeInductorMessage.class, 24, Side.SERVER);
+    }
+
+    public static void sendToAllAround(IMessage message, TileEntity te, int range) {
+        INSTANCE.sendToAllAround(message, new NetworkRegistry.TargetPoint(te.getWorldObj().provider.dimensionId, te.xCoord, te.yCoord, te.zCoord, range));
+    }
+
+    public static void sendToAllAround(IMessage message, TileEntity te) {
+        sendToAllAround(message, te, 64);
+    }
+
+    public static void sendTo(IMessage message, EntityPlayerMP player) {
+        INSTANCE.sendTo(message, player);
+    }
+
+    public static void sendToServer(IMessage message) {
+        INSTANCE.sendToServer(message);
     }
 }

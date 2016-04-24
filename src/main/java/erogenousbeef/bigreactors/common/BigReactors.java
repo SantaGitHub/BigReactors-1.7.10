@@ -3,11 +3,12 @@ package erogenousbeef.bigreactors.common;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import erogenousbeef.bigreactors.common.block.*;
 import erogenousbeef.bigreactors.common.multiblock.MultiblockExchanger;
 import erogenousbeef.bigreactors.common.multiblock.block.*;
 import erogenousbeef.bigreactors.common.multiblock.tileentity.*;
-import erogenousbeef.bigreactors.common.recipe.RecipeHandler;
-import erogenousbeef.bigreactors.common.tileentity.TileEntityLiquidizer;
+import erogenousbeef.bigreactors.common.tileentity.liquidizer.LiquidizerRecipeManager;
+import erogenousbeef.bigreactors.common.tileentity.liquidizer.TileEntityLiquidizer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -21,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -36,10 +36,6 @@ import erogenousbeef.bigreactors.api.registry.Reactants;
 import erogenousbeef.bigreactors.api.registry.ReactorConversions;
 import erogenousbeef.bigreactors.api.registry.ReactorInterior;
 import erogenousbeef.bigreactors.api.registry.TurbineCoil;
-import erogenousbeef.bigreactors.common.block.BlockBRDevice;
-import erogenousbeef.bigreactors.common.block.BlockBRGenericFluid;
-import erogenousbeef.bigreactors.common.block.BlockBRMetal;
-import erogenousbeef.bigreactors.common.block.BlockBROre;
 import erogenousbeef.bigreactors.common.data.StandardReactants;
 import erogenousbeef.bigreactors.common.item.ItemBRBucket;
 import erogenousbeef.bigreactors.common.item.ItemBeefDebugTool;
@@ -123,7 +119,6 @@ public class BigReactors {
 	public static int userWorldGenVersion = 0;
 
 	public static BREventHandler eventHandler = null;
-	public static BigReactorsTickHandler tickHandler = null;
 	public static BRWorldGenerator worldGenerator = null;
 	public static HashSet<Integer> dimensionWhitelist = new HashSet<Integer>();
 	
@@ -148,6 +143,14 @@ public class BigReactors {
 	public static float turbineAeroDragMultiplier = 1.0f;
 	public static float turbineMassDragMultiplier = 1.0f;
 	public static float	turbineFluidPerBladeMultiplier = 1.0f;
+
+
+    //Sound Configs
+    public static float machineSoundVolume = 1.0f;
+    public static boolean machineSoundsEnabled = true;
+
+    // Machines
+    public static BlockLiquidizer blockLiquidizer;
 	
 	public static boolean isValentinesDay = false; // Easter Egg :)
 	
@@ -210,7 +213,9 @@ public class BigReactors {
 			turbineMassDragMultiplier = (float)BRConfig.CONFIGURATION.get("General", "turbineMassDragMultiplier", 1.0, "A multiplier for balancing rotor sizes. Multiplies the amount of energy lost to friction per tick. (Default: 1)").getDouble(1.0);
 			turbineFluidPerBladeMultiplier = (float)BRConfig.CONFIGURATION.get("General", "turbineFluidPerBladeMultiplier", 1.0, "A multiplier for balancing coil size. Multiplies the amount of fluid each blade block can process (base of 25 will be multiplied, then rounded down to the nearest integer). (Default: 1)").getDouble(1.0);
 
-			
+            //Sound configs
+            machineSoundVolume = (float)BRConfig.CONFIGURATION.get("General", "machineSoundVolume", machineSoundVolume, "Volume of machines' sounds").getDouble(1.0);
+            machineSoundsEnabled = BRConfig.CONFIGURATION.get("General", "enableMachineSound", machineSoundsEnabled, "If true, machines will make sounds").getBoolean(machineSoundsEnabled);
 			
 			MultiblockTurbine.inputFluidPerBlade = (int) Math.floor(MultiblockTurbine.inputFluidPerBlade * turbineFluidPerBladeMultiplier);
 			MultiblockTurbine.inductorBaseDragCoefficient *= turbineCoilDragMultiplier;
@@ -261,7 +266,10 @@ public class BigReactors {
 			 */
 			// Recipe Registry
 
-            RecipeHandler.addLiquidizerRecipe(new ItemStack(Items.redstone), new FluidStack(FluidRegistry.WATER, 1000), new FluidStack(FluidRegistry.LAVA, 500));
+			//This must be loaded before parsing the recipes so we get the preferred outputs
+			OreDictionaryPreferences.loadConfig();
+
+			LiquidizerRecipeManager.getInstance().loadRecipesFromConfig();
 			
 			// Yellorium
 			if (blockYelloriteOre != null)
@@ -468,7 +476,6 @@ public class BigReactors {
 			GameRegistry.registerTileEntity(TileEntityTurbineCreativeSteamGenerator.class, "BRTurbineCreativeSteamGenerator");
 
             GameRegistry.registerTileEntity(TileEntityExchangerPartStandard.class, "BRExchangerPart"); //TODO: Add later
-			GameRegistry.registerTileEntity(TileEntityLiquidizer.class, "BRLiquidizer");
 
 			registeredTileEntities = true;
 		}
@@ -655,10 +662,14 @@ public class BigReactors {
 			GameRegistry.registerBlock(BigReactors.blockDevice, ItemBlockBigReactors.class, "BRDevice");
 			
 			OreDictionary.registerOre("brDeviceCyaniteProcessor", ((BlockBRDevice)BigReactors.blockDevice).getCyaniteReprocessorItemStack());
-			OreDictionary.registerOre("brDeviceLiquidizer", ((BlockBRDevice)BigReactors.blockDevice).getLiquidizerItemStack());
 
 			BRConfig.CONFIGURATION.save();
 		}
+	}
+
+	public static void registerMachines() {
+
+        blockLiquidizer = BlockLiquidizer.create();
 	}
 	
 	public static void registerCreativeParts(int id, boolean require) {

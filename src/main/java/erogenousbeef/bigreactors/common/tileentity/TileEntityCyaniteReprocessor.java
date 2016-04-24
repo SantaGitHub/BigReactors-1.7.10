@@ -29,13 +29,13 @@ public class TileEntityCyaniteReprocessor extends TileEntityPoweredInventoryFlui
 
 	public static final int FLUIDTANK_WATER = 0;
 	public static final int NUM_TANKS = 1;
-	
+
 	protected static final int FLUID_CONSUMED = FluidContainerRegistry.BUCKET_VOLUME * 1;
 	protected static final int INGOTS_CONSUMED = 2;
-	
+
 	public TileEntityCyaniteReprocessor() {
 		super();
-		
+
 		// Do not transmit energy from the internal buffer.
 		m_ProvidesEnergy = false;
 	}
@@ -53,7 +53,7 @@ public class TileEntityCyaniteReprocessor extends TileEntityPoweredInventoryFlui
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
 		if(itemstack == null) { return true; }
-		
+
 		if(slot == SLOT_OUTLET) {
 			return Reactants.isFuel(itemstack);
 		}
@@ -114,21 +114,21 @@ public class TileEntityCyaniteReprocessor extends TileEntityPoweredInventoryFlui
 				// WTF?
 				return;
 			}
-			
+
 			if(consumeInputs()) {
 				_inventories[SLOT_OUTLET] = candidates.get(0).copy();
 				_inventories[SLOT_OUTLET].stackSize = 1;
 			}
 		}
-		
+
 		distributeItemsFromSlot(SLOT_OUTLET);
 		markChunkDirty();
 	}
-	
+
 	private boolean consumeInputs() {
 		_inventories[SLOT_INLET] = StaticUtils.Inventory.consumeItem(_inventories[SLOT_INLET], INGOTS_CONSUMED);
 		drain(0, FLUID_CONSUMED, true);
-		
+
 		return true;
 	}
 
@@ -147,7 +147,7 @@ public class TileEntityCyaniteReprocessor extends TileEntityPoweredInventoryFlui
 		if(type == null) { return false; }
 		return type.getFluid().getID() == FluidRegistry.getFluid("water").getID();
 	}
-	
+
 	/// BeefGUI
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -159,7 +159,7 @@ public class TileEntityCyaniteReprocessor extends TileEntityPoweredInventoryFlui
 	public Container getContainer(EntityPlayer player) {
 		return new ContainerCyaniteReprocessor(this, player);
 	}
-	
+
 	@Override
 	protected int getDefaultTankForFluid(Fluid fluid) {
 		if(fluid.getName() == "water")
@@ -167,7 +167,7 @@ public class TileEntityCyaniteReprocessor extends TileEntityPoweredInventoryFlui
 		else
 			return FLUIDTANK_NONE;
 	}
-	
+
 	// IReconfigurableSides & IBeefReconfigurableSides
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconForSide(int side) {
@@ -177,19 +177,19 @@ public class TileEntityCyaniteReprocessor extends TileEntityPoweredInventoryFlui
 		}
 
 		int exposure = getExposure(side);
-		
+
 		switch(exposure) {
-		case 0:
-			return ClientProxy.CommonBlockIcons.getIcon(ClientProxy.CommonBlockIcons.ITEM_RED);
-		case 1:
-			return ClientProxy.CommonBlockIcons.getIcon(ClientProxy.CommonBlockIcons.ITEM_GREEN);
-		case 2:
-			return ClientProxy.CommonBlockIcons.getIcon(ClientProxy.CommonBlockIcons.FLUID_BLUE);
-		default:
-			return ClientProxy.CommonBlockIcons.getIcon(ClientProxy.CommonBlockIcons.DEFAULT);
+			case 0:
+				return ClientProxy.CommonBlockIcons.getIcon(ClientProxy.CommonBlockIcons.ITEM_RED);
+			case 1:
+				return ClientProxy.CommonBlockIcons.getIcon(ClientProxy.CommonBlockIcons.ITEM_GREEN);
+			case 2:
+				return ClientProxy.CommonBlockIcons.getIcon(ClientProxy.CommonBlockIcons.FLUID_BLUE);
+			default:
+				return ClientProxy.CommonBlockIcons.getIcon(ClientProxy.CommonBlockIcons.DEFAULT);
 		}
 	}
-	
+
 	@Override
 	public int getNumConfig(int side) {
 		if(facing == side) {
