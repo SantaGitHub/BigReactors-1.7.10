@@ -1,5 +1,6 @@
 package erogenousbeef.bigreactors.common.tileentity.base;
 
+import erogenousbeef.bigreactors.common.recipe.SlotDefinition;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.ForgeDirection;

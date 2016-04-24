@@ -2,10 +2,10 @@ package erogenousbeef.bigreactors.common;
 
 import java.util.Calendar;
 
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import cofh.api.modhelpers.ThermalExpansionHelper;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -37,8 +37,6 @@ public class CommonProxy {
 		CommonPacketHandler.init();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(BRLoader.instance, new BigReactorsGUIHandler());
-		BigReactors.tickHandler = new BigReactorsTickHandler();
-		FMLCommonHandler.instance().bus().register(BigReactors.tickHandler);
         FMLCommonHandler.instance().bus().register(new MultiblockServerTickHandler());
 		
 		sendInterModAPIMessages();
@@ -150,10 +148,17 @@ public class CommonProxy {
 	public void setIcons(TextureStitchEvent.Post event) {
 	}
 
-    public EntityPlayer getPlayer(MessageContext context)
-    {
-        return context.getServerHandler().playerEntity;
+    public World getClientWorld() {
+        return null;
     }
+
+    public EntityPlayer getClientPlayer() {
+        return null;
+    }
+
+	public boolean isNeiInstalled() {
+		return false;
+	}
 
 	/// Mod Interoperability ///
 	void registerWithOtherMods() {

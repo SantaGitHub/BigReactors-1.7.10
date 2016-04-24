@@ -32,6 +32,17 @@ public class ClientProxy extends CommonProxy {
 	public static CommonBlockIconManager CommonBlockIcons;
 
 	public static long lastRenderTime = Minecraft.getSystemTime();
+
+    // @formatter:off
+    public static int[][] sideAndFacingToSpriteOffset = new int[][] {
+            { 3, 2, 0, 0, 0, 0 },
+            { 2, 3, 1, 1, 1, 1 },
+            { 1, 1, 3, 2, 5, 4 },
+            { 0, 0, 2, 3, 4, 5 },
+            { 4, 5, 4, 5, 3, 2 },
+            { 5, 4, 5, 4, 2, 3 }
+    };
+    // @formatter:on
 	
 	public ClientProxy() {
 		GuiIcons = new BeefGuiIconManager();

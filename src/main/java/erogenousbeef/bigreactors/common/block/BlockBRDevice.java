@@ -3,9 +3,6 @@ package erogenousbeef.bigreactors.common.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import erogenousbeef.bigreactors.common.tileentity.TileEntityLiquidizer;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -39,15 +36,14 @@ import erogenousbeef.bigreactors.utils.StaticUtils;
 public class BlockBRDevice extends BlockCoFHBase {
 
 	public static final int META_CYANITE_REPROCESSOR = 0;
-	public static final int META_LIQUIDIZER = 1;
-	
+
 	public static final String[] _subBlocks = {
-		"cyaniteReprocessor", "liquidizer"
+			"cyaniteReprocessor"
 	};
-	
+
 	private IIcon[] _icons = new IIcon[_subBlocks.length];
 	private IIcon[] _activeIcons = new IIcon[_subBlocks.length];
-	
+
 	public BlockBRDevice(Material material) {
 		super(material);
 		setStepSound(soundTypeMetal);
@@ -56,7 +52,7 @@ public class BlockBRDevice extends BlockCoFHBase {
 		setBlockTextureName(BigReactors.TEXTURE_NAME_PREFIX + "blockBRDevice");
 		setCreativeTab(BigReactors.TAB);
 	}
-	
+
 	public static final int SIDE_FRONT = ForgeDirection.NORTH.ordinal();
 
 	private IIcon safeGetIcon(IIcon[] list, int idx, int x, int y, int z) {
@@ -78,7 +74,7 @@ public class BlockBRDevice extends BlockCoFHBase {
 			IReconfigurableFacing teFacing = (IReconfigurableFacing)te;
 			front = teFacing.getFacing();
 		}
-		
+
 		if(side == front) {
 			if(te instanceof TileEntityBeefBase) {
 				TileEntityBeefBase beefTe = (TileEntityBeefBase)te;
@@ -88,7 +84,7 @@ public class BlockBRDevice extends BlockCoFHBase {
 			}
 			return safeGetIcon(_icons, metadata, te.xCoord, te.yCoord, te.zCoord);
 		}
-		
+
 		if(te instanceof IBeefReconfigurableSides) {
 			IBeefReconfigurableSides teSides = (IBeefReconfigurableSides)te;
 			return teSides.getIconForSide(side);
@@ -96,7 +92,7 @@ public class BlockBRDevice extends BlockCoFHBase {
 
 		return blockIcon;
 	}
-	
+
 	@Override
 	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side)
 	{
@@ -104,7 +100,7 @@ public class BlockBRDevice extends BlockCoFHBase {
 		int metadata = blockAccess.getBlockMetadata(x, y, z);
 		return this.getIconFromTileEntity(te, metadata, side);
 	}
-	
+
 	@Override
 	public IIcon getIcon(int side, int metadata)
 	{
@@ -114,13 +110,13 @@ public class BlockBRDevice extends BlockCoFHBase {
 		}
 		return this.blockIcon;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister par1IconRegister)
 	{
 		this.blockIcon = par1IconRegister.registerIcon(BigReactors.TEXTURE_NAME_PREFIX + getUnlocalizedName());
-		
+
 		for(int i = 0; i < _subBlocks.length; ++i) {
 			_icons[i] = par1IconRegister.registerIcon(BigReactors.TEXTURE_NAME_PREFIX + getUnlocalizedName() + "." + _subBlocks[i]);
 			_activeIcons[i] = par1IconRegister.registerIcon(BigReactors.TEXTURE_NAME_PREFIX + getUnlocalizedName() + "." + _subBlocks[i] + ".active");
@@ -130,28 +126,21 @@ public class BlockBRDevice extends BlockCoFHBase {
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
 		switch(metadata) {
-		case META_CYANITE_REPROCESSOR:
-			return new TileEntityCyaniteReprocessor();
-        case META_LIQUIDIZER:
-            return new TileEntityLiquidizer();
-		default:
-			throw new IllegalArgumentException("Unknown metadata for tile entity");
+			case META_CYANITE_REPROCESSOR:
+				return new TileEntityCyaniteReprocessor();
+			default:
+				throw new IllegalArgumentException("Unknown metadata for tile entity");
 		}
 	}
 
 	public ItemStack getCyaniteReprocessorItemStack() {
 		return new ItemStack(this, 1, META_CYANITE_REPROCESSOR);
 	}
-    public ItemStack getLiquidizerItemStack() {
-        return new ItemStack(this, 1, META_LIQUIDIZER);
-    }
 
 	@Override
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
-        for(int metadata = 0; metadata < _subBlocks.length; metadata++) {
-            par3List.add(new ItemStack(this, 1, metadata));
-        }
+		par3List.add(this.getCyaniteReprocessorItemStack());
 	}
 
 	@Override
@@ -170,7 +159,7 @@ public class BlockBRDevice extends BlockCoFHBase {
 
 			return false;
 		}
-		
+
 		if(te instanceof IWrenchable && StaticUtils.Inventory.isPlayerHoldingWrench(entityPlayer)) {
 			return ((IWrenchable)te).onWrench(entityPlayer, side);
 		}
@@ -202,22 +191,22 @@ public class BlockBRDevice extends BlockCoFHBase {
 			}
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	// IDismantleable
 	@Override
 	public ArrayList<ItemStack> dismantleBlock(EntityPlayer player, NBTTagCompound blockTag,
-			World world, int x, int y, int z, boolean returnDrops, boolean simulate) {
+											   World world, int x, int y, int z, boolean returnDrops, boolean simulate) {
 		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
 		int metadata = world.getBlockMetadata(x, y, z);
 		stacks.add(new ItemStack(getItemDropped(metadata, world.rand, 0), 1, damageDropped(metadata)));
-		
+
 		if(returnDrops && !simulate)
 		{
 			TileEntity te = world.getTileEntity(x, y, z);
-			
+
 			if(te instanceof IInventory) {
 				IInventory invTe = (IInventory)te;
 				for(int i = 0; i < invTe.getSizeInventory(); i++) {
@@ -232,7 +221,7 @@ public class BlockBRDevice extends BlockCoFHBase {
 
 		if(!simulate) {
 			world.setBlockToAir(x, y, z);
-		
+
 			if(!returnDrops) {
 				for(ItemStack stack: stacks) {
 					CoreUtils.dropItemStackIntoWorldWithVelocity(stack, world, x, y, z);
@@ -242,7 +231,7 @@ public class BlockBRDevice extends BlockCoFHBase {
 
 		return stacks;
 	}
-	
+
 	// IInitializer (unused)
 	@Override
 	public boolean initialize() {

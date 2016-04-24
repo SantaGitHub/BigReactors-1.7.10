@@ -1,5 +1,8 @@
 package erogenousbeef.bigreactors.common;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
+import erogenousbeef.bigreactors.GuiHandler;
+import erogenousbeef.bigreactors.core.util.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -32,11 +35,11 @@ public class BRLoader {
 	@Instance(MOD_ID)
 	public static BRLoader instance;
 
-	/** BigReactors Packet Pipeline */
-	public static PacketHandler packetHandler = new PacketHandler();
-
 	@SidedProxy(clientSide = "erogenousbeef.bigreactors.client.ClientProxy", serverSide = "erogenousbeef.bigreactors.common.CommonProxy")
 	public static CommonProxy proxy;
+
+    public static GuiHandler guiHandler = new GuiHandler();
+    public static final Lang lang = new Lang("bigreactors");
 	
 	@Mod.Metadata(MOD_ID)
 	public static ModMetadata metadata;
@@ -57,6 +60,8 @@ public class BRLoader {
 		BigReactors.registerItems();
 		BigReactors.registerExchangerPartBlocks(0, true);
 
+		BigReactors.registerMachines();
+
 		StandardReactants.register();
 		
 		BigReactors.eventHandler = new BREventHandler();
@@ -75,10 +80,10 @@ public class BRLoader {
 	public void load(FMLInitializationEvent evt)
 	{
 		proxy.init();
-		BigReactors.register(this);
 
-		//Packet registrations
-		packetHandler.initialize();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
+
+		BigReactors.register(this);
 	}
 	
 	@EventHandler
