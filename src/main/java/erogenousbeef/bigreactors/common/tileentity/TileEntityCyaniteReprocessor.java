@@ -1,9 +1,7 @@
 package erogenousbeef.bigreactors.common.tileentity;
 
 import java.util.ArrayList;
-import java.util.Map;
 
-import erogenousbeef.bigreactors.common.recipe.RecipeHandler;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

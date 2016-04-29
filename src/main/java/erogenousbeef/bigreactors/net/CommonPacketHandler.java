@@ -48,6 +48,13 @@ public class CommonPacketHandler {
 	
     public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(BigReactors.CHANNEL.toLowerCase());
 
+    private static int ID = 27;
+
+    public static int nextID()
+    {
+        return ID++;
+    }
+
     /**
      * Initialize the messages. Note that all messages (server>client and client>server)
      * must be initialized on _both_ the client and the server.
@@ -63,9 +70,8 @@ public class CommonPacketHandler {
         INSTANCE.registerMessage(ReactorUpdateWasteEjectionMessage.Handler.class, ReactorUpdateWasteEjectionMessage.class, 13, Side.CLIENT);
         INSTANCE.registerMessage(TurbineUpdateMessage.Handler.class, TurbineUpdateMessage.class, 15, Side.CLIENT);
 
-        INSTANCE.registerMessage(PacketProgress.Handler.class, PacketProgress.class, 1, Side.CLIENT);
-        INSTANCE.registerMessage(PacketGhostSlot.Handler.class, PacketGhostSlot.class, 3, Side.SERVER);
-        INSTANCE.registerMessage(PacketTanks.class,PacketTanks.class,PacketHandler.nextID(), Side.CLIENT);
+        INSTANCE.registerMessage(PacketProgress.Handler.class, PacketProgress.class, 25, Side.CLIENT);
+        INSTANCE.registerMessage(PacketGhostSlot.Handler.class, PacketGhostSlot.class, 26, Side.SERVER);
 
         // Client >> Server Messages
     	INSTANCE.registerMessage(MachineCommandActivateMessage.Handler.class, MachineCommandActivateMessage.class, 0, Side.SERVER);

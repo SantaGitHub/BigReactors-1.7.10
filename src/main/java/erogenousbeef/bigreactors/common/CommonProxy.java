@@ -2,6 +2,8 @@ package erogenousbeef.bigreactors.common;
 
 import java.util.Calendar;
 
+import cpw.mods.fml.common.gameevent.TickEvent;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -27,6 +29,10 @@ import erogenousbeef.bigreactors.utils.intermod.ModHelperMekanism;
 import erogenousbeef.core.multiblock.MultiblockServerTickHandler;
 
 public class CommonProxy {
+
+    protected long serverTickCount = 0;
+    protected long clientTickCount = 0;
+    protected final TickTimer tickTimer = new TickTimer();
 
 	public void preInit() {
 	}
@@ -152,7 +158,12 @@ public class CommonProxy {
         return null;
     }
 
-    public EntityPlayer getClientPlayer() {
+    public void loadIcons() {
+        ;
+    }
+
+	public EntityPlayer getClientPlayer() {
+
         return null;
     }
 
@@ -172,4 +183,36 @@ public class CommonProxy {
 		modHelper = new ModHelperMekanism();
 		modHelper.register();
 	}
+
+    public void load() {
+        FMLCommonHandler.instance().bus().register(tickTimer);
+    }
+
+    public long getTickCount() {
+        return serverTickCount;
+    }
+
+    protected void onServerTick() {
+        ++serverTickCount;
+    }
+
+    protected void onClientTick() {
+    }
+
+    public final class TickTimer {
+
+        @SubscribeEvent
+        public void onTick(TickEvent.ServerTickEvent evt) {
+            if(evt.phase == TickEvent.Phase.END) {
+                onServerTick();
+            }
+        }
+
+        @SubscribeEvent
+        public void onTick(TickEvent.ClientTickEvent evt) {
+            if(evt.phase == TickEvent.Phase.END) {
+                onClientTick();
+            }
+        }
+    }
 }

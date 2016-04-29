@@ -2,7 +2,14 @@ package erogenousbeef.bigreactors.client;
 
 import java.util.Set;
 
+import erogenousbeef.bigreactors.common.block.base.BlockMachine;
+import erogenousbeef.bigreactors.common.machine.BlockMachineRenderer;
+import erogenousbeef.bigreactors.core.client.handlers.SpecialTooltipHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -48,6 +55,20 @@ public class ClientProxy extends CommonProxy {
 		GuiIcons = new BeefGuiIconManager();
 		CommonBlockIcons = new CommonBlockIconManager();
 	}
+
+	@Override
+    public void load() {
+        super.load();
+
+        SpecialTooltipHandler tt = SpecialTooltipHandler.INSTANCE;
+
+        // Renderers
+
+        BlockMachine.renderId = RenderingRegistry.getNextAvailableRenderId();
+        BlockMachineRenderer machRen = new BlockMachineRenderer();
+        RenderingRegistry.registerBlockHandler(machRen);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BigReactors.blockLiquidizer), machRen);
+    }
 	
 	@Override
 	public void preInit() {}
@@ -102,4 +123,44 @@ public class ClientProxy extends CommonProxy {
 	public void setIcons(TextureStitchEvent.Post event) {
 		BigReactors.setNonBlockFluidIcons();
 	}
+
+    private boolean checkedNei = false;
+    private boolean neiInstalled = false;
+
+    @Override
+    public World getClientWorld() {
+        return FMLClientHandler.instance().getClient().theWorld;
+    }
+
+    @Override
+    public boolean isNeiInstalled() {
+        if(checkedNei) {
+            return neiInstalled;
+        }
+        try {
+            Class.forName("erogenousbeef.bigreactors.nei.LiquidizerRecipeHandler");
+            neiInstalled = true;
+        } catch (Exception e) {
+            neiInstalled = false;
+        }
+        checkedNei = true;
+        return false;
+    }
+
+    @Override
+    public EntityPlayer getClientPlayer() {
+        return Minecraft.getMinecraft().thePlayer;
+    }
+
+    @Override
+    public long getTickCount() {
+        return clientTickCount;
+    }
+
+    @Override
+    protected void onClientTick() {
+        if(!Minecraft.getMinecraft().isGamePaused() && Minecraft.getMinecraft().theWorld != null) {
+            ++clientTickCount;
+        }
+    }
 }

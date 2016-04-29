@@ -2,6 +2,7 @@ package erogenousbeef.bigreactors.common;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import erogenousbeef.bigreactors.GuiHandler;
+import erogenousbeef.bigreactors.common.tileentity.liquidizer.LiquidizerRecipeManager;
 import erogenousbeef.bigreactors.core.util.Lang;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
@@ -49,6 +50,8 @@ public class BRLoader {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+        proxy.loadIcons();
+
 		BigReactors.registerOres(0, true);
 		BigReactors.registerIngots(0);
 		BigReactors.registerFuelRods(0, true);
@@ -84,10 +87,18 @@ public class BRLoader {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 
 		BigReactors.register(this);
+
+        proxy.load();
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent evt) {
+
+		//This must be loaded before parsing the recipes so we get the preferred outputs
+		OreDictionaryPreferences.loadConfig();
+
+		LiquidizerRecipeManager.getInstance().loadRecipesFromConfig();
+
 		proxy.postInit();
 	}
 	

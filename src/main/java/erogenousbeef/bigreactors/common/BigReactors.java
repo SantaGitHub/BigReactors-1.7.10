@@ -264,11 +264,6 @@ public class BigReactors {
 			 * Register Recipes
 			 */
 			// Recipe Registry
-
-			//This must be loaded before parsing the recipes so we get the preferred outputs
-			OreDictionaryPreferences.loadConfig();
-
-			LiquidizerRecipeManager.getInstance().loadRecipesFromConfig();
 			
 			// Yellorium
 			if (blockYelloriteOre != null)

@@ -9,7 +9,6 @@ import erogenousbeef.bigreactors.core.util.BlockCoord;
 import erogenousbeef.bigreactors.core.util.FluidUtil;
 import erogenousbeef.bigreactors.core.util.ITankAccess;
 import erogenousbeef.bigreactors.net.CommonPacketHandler;
-import erogenousbeef.bigreactors.net.PacketHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -189,7 +188,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredTask implements IFlui
 
     @Override
     protected void sendTaskProgressPacket() {
-        PacketHandler.sendToAllAround(new PacketLiquidizerProgress(this), this);
+        CommonPacketHandler.sendToAllAround(new PacketLiquidizerProgress(this), this);
         ticksSinceLastProgressUpdate = 0;
     }
 

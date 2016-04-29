@@ -7,12 +7,10 @@ import erogenousbeef.bigreactors.common.fluid.Fluids;
 import erogenousbeef.bigreactors.common.machine.IoMode;
 import erogenousbeef.bigreactors.core.client.gui.IconButton;
 import erogenousbeef.bigreactors.core.client.gui.widget.GuiToolTip;
-import erogenousbeef.bigreactors.core.client.render.ColorUtil;
 import erogenousbeef.bigreactors.core.client.render.RenderUtil;
 import erogenousbeef.bigreactors.net.CommonPacketHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import org.lwjgl.opengl.GL11;
@@ -112,10 +110,6 @@ public class GuiLiquidizer extends GuiPoweredMachineBase<TileEntityLiquidizer> {
                 outputIcon = liquidizer.currentTaskOutputFluid.getStillIcon();
             }
 
-            if(inputIcon != null && outputIcon != null) {
-                renderVat(inputIcon, outputIcon, liquidizer.getProgress());
-            }
-
         }
 
         int x = guiLeft + 30;
@@ -140,26 +134,6 @@ public class GuiLiquidizer extends GuiPoweredMachineBase<TileEntityLiquidizer> {
 
         bindGuiTexture();
         super.drawGuiContainerBackgroundLayer(par1, par2, par3);
-    }
-
-    private void renderVat(IIcon inputIcon, IIcon outputIcon, float progress) {
-        RenderUtil.bindBlockTexture();
-
-        int x = guiLeft + 76;
-        int y = guiTop + 34;
-
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glColor4f(1, 1, 1, 0.75f * (1f - progress));
-        drawTexturedModelRectFromIcon(x, y, inputIcon, 26, 28);
-
-        GL11.glColor4f(1, 1, 1, 0.75f * progress);
-        drawTexturedModelRectFromIcon(x, y, outputIcon, 26, 28);
-
-        GL11.glDisable(GL11.GL_BLEND);
-
-        GL11.glColor4f(1, 1, 1, 1);
-        bindGuiTexture();
-        drawTexturedModalRect(x, y, 0, 256 - 28, 26, 28);
     }
 
     @Override

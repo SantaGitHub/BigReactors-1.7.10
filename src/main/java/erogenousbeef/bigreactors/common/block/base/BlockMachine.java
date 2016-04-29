@@ -14,7 +14,7 @@ import erogenousbeef.bigreactors.common.machine.PacketItemBuffer;
 import erogenousbeef.bigreactors.common.machine.PacketPowerStorage;
 import erogenousbeef.bigreactors.common.tileentity.base.TileEntityBase;
 import erogenousbeef.bigreactors.common.tileentity.base.TileEntityBasicMachine;
-import erogenousbeef.bigreactors.net.PacketHandler;
+import erogenousbeef.bigreactors.net.CommonPacketHandler;
 import erogenousbeef.bigreactors.waila.IWailaInfoProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
@@ -55,9 +55,9 @@ public abstract class BlockMachine<T extends TileEntityBasicMachine> extends Blo
     protected final ModObject modObject;
 
     static {
-        PacketHandler.INSTANCE.registerMessage(PacketIoMode.class, PacketIoMode.class, PacketHandler.nextID(), Side.SERVER);
-        PacketHandler.INSTANCE.registerMessage(PacketItemBuffer.class, PacketItemBuffer.class, PacketHandler.nextID(), Side.SERVER);
-        PacketHandler.INSTANCE.registerMessage(PacketPowerStorage.class, PacketPowerStorage.class, PacketHandler.nextID(), Side.CLIENT);
+        CommonPacketHandler.INSTANCE.registerMessage(PacketIoMode.class, PacketIoMode.class, CommonPacketHandler.nextID(), Side.SERVER);
+        CommonPacketHandler.INSTANCE.registerMessage(PacketItemBuffer.class, PacketItemBuffer.class, CommonPacketHandler.nextID(), Side.SERVER);
+        CommonPacketHandler.INSTANCE.registerMessage(PacketPowerStorage.class, PacketPowerStorage.class, CommonPacketHandler.nextID(), Side.CLIENT);
     }
 
     protected BlockMachine(ModObject mo, Class<T> teClass, Material mat) {

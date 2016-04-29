@@ -7,7 +7,6 @@ import erogenousbeef.bigreactors.common.power.PowerHandlerUtil;
 import erogenousbeef.bigreactors.common.recipe.SlotDefinition;
 import erogenousbeef.bigreactors.core.util.vecmath.VecmathUtil;
 import erogenousbeef.bigreactors.net.CommonPacketHandler;
-import erogenousbeef.bigreactors.net.PacketHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
