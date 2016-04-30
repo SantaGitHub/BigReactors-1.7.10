@@ -4,11 +4,10 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import erogenousbeef.bigreactors.common.BRLoader;
+import erogenousbeef.bigreactors.common.BRLog;
 import erogenousbeef.bigreactors.common.BigReactors;
 import erogenousbeef.bigreactors.common.interfaces.IMachine;
-import erogenousbeef.bigreactors.common.machine.IIoConfigurable;
-import erogenousbeef.bigreactors.common.machine.IoMode;
-import erogenousbeef.bigreactors.common.machine.MachineSound;
+import erogenousbeef.bigreactors.common.machine.*;
 import erogenousbeef.bigreactors.common.recipe.SlotDefinition;
 import erogenousbeef.bigreactors.core.util.BlockCoord;
 import erogenousbeef.bigreactors.core.util.InventoryWrapper;
@@ -28,7 +27,8 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class TileEntityBasicMachine extends TileEntityBR implements ISidedInventory, IMachine, IIoConfigurable {
+public abstract class TileEntityBasicMachine extends TileEntityBR implements ISidedInventory, IMachine, IIoConfigurable,
+        IRedstoneModeControlable {
 
     public short facing;
 
@@ -40,6 +40,8 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
 
     protected ItemStack[] inventory;
     protected final SlotDefinition slotDefinition;
+
+    protected RedstoneControlMode redstoneControlMode;
 
     protected boolean redstoneCheckPassed;
 
@@ -132,15 +134,6 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
         return slotDefinition;
     }
 
-    public boolean isValidUpgrade(ItemStack itemstack) {
-        for (int i = slotDefinition.getMinUpgradeSlot(); i <= slotDefinition.getMaxUpgradeSlot(); i++) {
-            if(isItemValidForSlot(i, itemstack)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean isValidInput(ItemStack itemstack) {
         for (int i = slotDefinition.getMinInputSlot(); i <= slotDefinition.getMaxInputSlot(); i++) {
             if(isItemValidForSlot(i, itemstack)) {
@@ -168,6 +161,18 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
     }
 
     protected abstract boolean isMachineItemValidForSlot(int i, ItemStack itemstack);
+
+    @Override
+    public RedstoneControlMode getRedstoneControlMode() {
+        return redstoneControlMode;
+    }
+
+    @Override
+    public void setRedstoneControlMode(RedstoneControlMode redstoneControlMode) {
+        this.redstoneControlMode = redstoneControlMode;
+        redstoneStateDirty = true;
+        updateBlock();
+    }
 
     public short getFacing() {
         return facing;
@@ -229,10 +234,17 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
         } // else is server, do all logic only on the server
 
         boolean requiresClientSync = forceClientUpdate;
+        boolean prevRedCheck = redstoneCheckPassed;
+        if(redstoneStateDirty) {
+            redstoneCheckPassed = RedstoneControlMode.isConditionMet(redstoneControlMode, this);
+            redstoneStateDirty = false;
+        }
 
         if(shouldDoWorkThisTick(5)) {
             requiresClientSync |= doSideIo();
         }
+
+        requiresClientSync |= prevRedCheck != redstoneCheckPassed;
 
         requiresClientSync |= processTasks(redstoneCheckPassed);
 
@@ -438,6 +450,12 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
             }
         }
 
+        int rsContr = nbtRoot.getInteger("redstoneControlMode");
+        if(rsContr < 0 || rsContr >= RedstoneControlMode.values().length) {
+            rsContr = 0;
+        }
+        redstoneControlMode = RedstoneControlMode.values()[rsContr];
+
         if(nbtRoot.hasKey("hasFaces")) {
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                 if(nbtRoot.hasKey("face" + dir.ordinal())) {
@@ -487,6 +505,8 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
         }
         nbtRoot.setTag("Items", itemList);
 
+        nbtRoot.setInteger("redstoneControlMode", redstoneControlMode.ordinal());
+
         //face modes
         if(faceModes != null) {
             nbtRoot.setByte("hasFaces", (byte) 1);
@@ -505,7 +525,7 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
         }
 
         NBTTagCompound root = stack.stackTagCompound;
-        root.setBoolean("eio.abstractMachine", true);
+        root.setBoolean("br.abstractMachine", true);
         writeCommon(root);
 
         String name;

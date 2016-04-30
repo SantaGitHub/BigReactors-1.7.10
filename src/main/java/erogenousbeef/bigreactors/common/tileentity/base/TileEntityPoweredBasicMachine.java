@@ -15,7 +15,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 public abstract class TileEntityPoweredBasicMachine extends TileEntityBasicMachine implements IInternalPoweredTile{
 
     // Power
-    private ICapacitor capacitor;
     private int maxEnergyReceived = 100;
     private int maxEnergyStored = 10000;
     private int maxEnergyExtracted = 80;
@@ -30,7 +29,6 @@ public abstract class TileEntityPoweredBasicMachine extends TileEntityBasicMachi
     @Override
     public void init() {
         super.init();
-        onCapacitorTypeChange();
     }
 
     @Override
@@ -93,14 +91,6 @@ public abstract class TileEntityPoweredBasicMachine extends TileEntityBasicMachi
         // NB: called on the client so can't use the power provider
         return VecmathUtil.clamp(Math.round(scale * ((float) storedEnergyRF / getMaxEnergyStored())), 0, scale);
     }
-
-    protected void setCapacitor(ICapacitor capacitor) {
-        this.capacitor = capacitor;
-        //Force a check that the new value is in bounds
-        setEnergyStored(getEnergyStored());
-    }
-
-    public void onCapacitorTypeChange() {}
 
     public int getPowerUsePerTick() {
         return maxEnergyExtracted;

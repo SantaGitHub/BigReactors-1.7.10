@@ -60,8 +60,6 @@ public class ClientProxy extends CommonProxy {
     public void load() {
         super.load();
 
-        SpecialTooltipHandler tt = SpecialTooltipHandler.INSTANCE;
-
         // Renderers
 
         BlockMachine.renderId = RenderingRegistry.getNextAvailableRenderId();

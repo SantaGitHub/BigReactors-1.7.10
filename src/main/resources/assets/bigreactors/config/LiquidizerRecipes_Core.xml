@@ -41,6 +41,7 @@
     <recipe name="Test" energyCost="1000" >
       <input>
         <itemStack modID="minecraft" itemName="redstone" slot="0" multiplier="1" />
+		<itemStack modID="minecraft" itemName="sugar"  slot="1" multiplier="1" />
         <fluidStack name="water" multiplier="0.25" />
       </input>
       <output>

@@ -1,9 +1,15 @@
 package erogenousbeef.bigreactors.common;
 
+import com.google.common.collect.ImmutableList;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
 import erogenousbeef.bigreactors.GuiHandler;
+import erogenousbeef.bigreactors.api.imc.IMC;
+import erogenousbeef.bigreactors.common.machine.PacketRedstoneMode;
 import erogenousbeef.bigreactors.common.tileentity.liquidizer.LiquidizerRecipeManager;
+import erogenousbeef.bigreactors.core.network.MessageTileNBT;
 import erogenousbeef.bigreactors.core.util.Lang;
+import erogenousbeef.bigreactors.net.CommonPacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -84,6 +90,9 @@ public class BRLoader {
 	{
 		proxy.init();
 
+        CommonPacketHandler.INSTANCE.registerMessage(MessageTileNBT.class, MessageTileNBT.class, CommonPacketHandler.nextID(), Side.SERVER);
+        CommonPacketHandler.INSTANCE.registerMessage(PacketRedstoneMode.class, PacketRedstoneMode.class, CommonPacketHandler.nextID(), Side.SERVER);
+
         NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 
 		BigReactors.register(this);
@@ -133,5 +142,26 @@ public class BRLoader {
         if(block == BigReactors.fluidCyaniteStill) return new ItemStack(BigReactors.fluidCyaniteBucketItem);
         else if(block == BigReactors.fluidYelloriumStill) return new ItemStack(BigReactors.fluidYelloriumBucketItem);
         else return null;
+    }
+
+    @EventHandler
+    public void onImc(FMLInterModComms.IMCEvent evt) {
+        processImc(evt.getMessages());
+    }
+
+    private void processImc(ImmutableList<FMLInterModComms.IMCMessage> messages) {
+        for (FMLInterModComms.IMCMessage msg : messages) {
+            String key = msg.key;
+            try {
+                if(msg.isStringMessage()) {
+                    String value = msg.getStringValue();
+                    if (IMC.LIQUIDIZER_RECIPE.equals(key)) {
+                        LiquidizerRecipeManager.getInstance().addCustomRecipes(value);
+                    }
+                }
+            } catch (Exception e) {
+                BRLog.error("Error occured handling IMC message " + key + " from " + msg.getSender());
+            }
+        }
     }
 }

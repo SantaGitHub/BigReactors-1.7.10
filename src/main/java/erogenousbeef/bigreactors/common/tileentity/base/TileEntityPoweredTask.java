@@ -1,5 +1,6 @@
 package erogenousbeef.bigreactors.common.tileentity.base;
 
+import erogenousbeef.bigreactors.common.BRLog;
 import erogenousbeef.bigreactors.common.machine.IPoweredTask;
 import erogenousbeef.bigreactors.common.machine.IoMode;
 import erogenousbeef.bigreactors.common.machine.PoweredTask;

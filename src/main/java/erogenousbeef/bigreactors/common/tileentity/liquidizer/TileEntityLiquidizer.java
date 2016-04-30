@@ -30,7 +30,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredTask implements IFlui
     Fluid currentTaskOutputFluid;
 
     public TileEntityLiquidizer() {
-        super(new SlotDefinition(0, 1, -1, -1, -1, -1));
+        super(new SlotDefinition(2, -1));
     }
 
     @Override
@@ -183,6 +183,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredTask implements IFlui
             CommonPacketHandler.sendToAllAround(new PacketTanks(this), this);
             tanksDirty = false;
         }
+        //BRLog.info("res/processTasks: " + res);
         return res;
     }
 

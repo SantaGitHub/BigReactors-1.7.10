@@ -9,6 +9,7 @@ import erogenousbeef.bigreactors.core.client.gui.IconButton;
 import erogenousbeef.bigreactors.core.client.gui.widget.GuiToolTip;
 import erogenousbeef.bigreactors.core.client.render.RenderUtil;
 import erogenousbeef.bigreactors.client.gui.base.IoConfigRenderer.SelectedFace;
+import erogenousbeef.bigreactors.core.util.BlockCoord;
 import erogenousbeef.bigreactors.core.util.Util;
 import erogenousbeef.bigreactors.core.util.vecmath.Vector4f;
 import net.minecraft.client.gui.GuiButton;
@@ -32,6 +33,8 @@ public class GuiMachineBase <T extends TileEntityBasicMachine> extends GuiContai
 
     private final T tileEntity;
 
+    protected RedstoneModeButton redstoneButton;
+
     private final GuiOverlayIoConfig configOverlay;
 
     protected final GuiButtonIoConfig configB;
@@ -49,6 +52,7 @@ public class GuiMachineBase <T extends TileEntityBasicMachine> extends GuiContai
         ySize = getYSize();
         int x = getXSize() - 5 - BUTTON_SIZE;
         int y = 5;
+        redstoneButton = new RedstoneModeButton(this, -1, x, y, tileEntity, new BlockCoord(tileEntity));
 
         configOverlay = new GuiOverlayIoConfig(machine);
         addOverlay(configOverlay);
@@ -65,6 +69,7 @@ public class GuiMachineBase <T extends TileEntityBasicMachine> extends GuiContai
     @Override
     public void initGui() {
         super.initGui();
+        redstoneButton.onGuiInit();
         configB.onGuiInit();
         recipeButton.onGuiInit();
     }
