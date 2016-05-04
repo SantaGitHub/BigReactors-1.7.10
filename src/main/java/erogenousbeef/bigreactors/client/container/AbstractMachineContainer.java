@@ -14,8 +14,6 @@ import java.util.*;
 
 public abstract class AbstractMachineContainer <T extends TileEntityBasicMachine> extends ContainerBR<T> {
 
-    protected Slot upgradeSlot;
-
     public AbstractMachineContainer(InventoryPlayer playerInv, T te) {
         super(playerInv, te);
     }
@@ -23,37 +21,11 @@ public abstract class AbstractMachineContainer <T extends TileEntityBasicMachine
     @Override
     protected void addSlots(InventoryPlayer playerInv) {
         addMachineSlots(playerInv);
-
-        final T te = getInv();
-        if(te.getSlotDefinition().getNumUpgradeSlots() == 1) {
-            upgradeSlot = new Slot(te, te.getSlotDefinition().getMinUpgradeSlot(), getUpgradeOffset().x, getUpgradeOffset().y) {
-
-                @Override
-                public int getSlotStackLimit() {
-                    return 1;
-                }
-
-                @Override
-                public boolean isItemValid(ItemStack itemStack) {
-                    return te.isItemValidForSlot(te.getSlotDefinition().getMinUpgradeSlot(), itemStack);
-                }
-            };
-            addSlotToContainer(upgradeSlot);
-        }
     }
 
     @Override
     public Point getPlayerInventoryOffset() {
         return new Point(8,84);
-    }
-
-    @Override
-    public Point getUpgradeOffset() {
-        return new Point(12,60);
-    }
-
-    public Slot getUpgradeSlot() {
-        return upgradeSlot;
     }
 
     /**

@@ -14,7 +14,6 @@ public class RecipeConfig {
     //---------------------------------------------- Loading ------------
 
     public static RecipeConfig loadRecipeConfig(String coreFileName, String customFileName, CustomTagHandler customHandler) {
-
         File coreFile = new File(BRConfig.configDirectory, coreFileName);
 
         String defaultVals = null;
@@ -99,7 +98,7 @@ public class RecipeConfig {
     private boolean dumpOreDictionary = false;
     private boolean enabled = true;
 
-    private Map<String, RecipeGroup> recipeGroups = new HashMap<String, RecipeGroup>();
+    private Map<String, RecipeGroup> recipeGroups = new HashMap<String, RecipeConfig.RecipeGroup>();
 
     public RecipeConfig() {
     }
@@ -273,9 +272,10 @@ public class RecipeConfig {
 
         private int energyRequired;
 
+        private RecipeBonusType bonusType = RecipeBonusType.MULTIPLY_OUTPUT;
+
         private String name;
 
-        private boolean allowMissing = false;
         private boolean invalidated = false;
 
         private RecipeElement(String name) {
@@ -301,11 +301,11 @@ public class RecipeConfig {
             List<Recipe> result = new ArrayList<Recipe>();
             if(isRecipePerInput) {
                 for (RecipeInput input : inputs) {
-                    result.add(new Recipe(input, energyRequired, outputArr));
+                    result.add(new Recipe(input, energyRequired, bonusType, outputArr));
                 }
             } else {
                 for (RecipeOutput output : outputs) {
-                    result.add(new Recipe(output, energyRequired, inputArr));
+                    result.add(new Recipe(output, energyRequired, bonusType, inputArr));
                 }
             }
             return result;
@@ -323,12 +323,12 @@ public class RecipeConfig {
             this.energyRequired = energyRequired;
         }
 
-        public void setAllowMissing(boolean allowMissing) {
-            this.allowMissing = allowMissing;
+        public RecipeBonusType getBonusType() {
+            return bonusType;
         }
 
-        public boolean allowMissing() {
-            return allowMissing;
+        public void setBonusType(RecipeBonusType bonusType) {
+            this.bonusType = bonusType;
         }
 
         public void invalidate() {
@@ -338,7 +338,7 @@ public class RecipeConfig {
         @Override
         public String toString() {
             return "Recipe [" + (invalidated ? "INVALID " : "") + "input=" + inputs + ", outputs=" + outputs + ", energyRequired="
-                    + energyRequired + "]";
+                    + energyRequired + ", bonusType=" + bonusType + "]";
         }
 
     }

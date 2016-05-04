@@ -99,6 +99,7 @@ public abstract class TileEntityPoweredTask extends TileEntityPowerConsumer impl
         }
 
         boolean requiresClientSync = false;
+
         // Process any current items
         requiresClientSync |= checkProgress(redstoneChecksPassed);
 
@@ -138,6 +139,7 @@ public abstract class TileEntityPoweredTask extends TileEntityPowerConsumer impl
     }
 
     protected boolean checkProgress(boolean redstoneChecksPassed) {
+
         if(currentTask == null || !hasPower()) {
             return false;
         }
@@ -268,8 +270,11 @@ public abstract class TileEntityPoweredTask extends TileEntityPowerConsumer impl
     }
 
     protected IMachineRecipe getNextRecipe() {
+
         if (cachedNextRecipe == null) {
             cachedNextRecipe = MachineRecipeRegistry.instance.getRecipeForInputs(getMachineName(), getRecipeInputs());
+
+            BRLog.info("testMachineName: " + getMachineName());
         }
         return cachedNextRecipe;
     }

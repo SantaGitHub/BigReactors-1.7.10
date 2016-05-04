@@ -1,5 +1,6 @@
 package erogenousbeef.bigreactors.common.tileentity.base;
 
+import erogenousbeef.bigreactors.common.BigReactors;
 import erogenousbeef.bigreactors.core.IProgressTile;
 import erogenousbeef.bigreactors.core.network.PacketProgress;
 import erogenousbeef.bigreactors.core.util.BlockCoord;
@@ -38,7 +39,7 @@ public abstract class TileEntityBase extends TileEntity {
 
     @Override
     public final void updateEntity() {
-        if (worldObj.getTotalWorldTime() != lastUpdate) {
+        if (BigReactors.allowExternalTickSpeedUp || worldObj.getTotalWorldTime() != lastUpdate) {
             lastUpdate = worldObj.getTotalWorldTime();
             doUpdate();
             if (isProgressTile && !worldObj.isRemote) {
@@ -116,7 +117,7 @@ public abstract class TileEntityBase extends TileEntity {
     }
 
     protected boolean isPoweredRedstone() {
-        return worldObj.blockExists(xCoord, yCoord, zCoord) && worldObj.getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0;
+        return worldObj.blockExists(xCoord, yCoord, zCoord) ? worldObj.getStrongestIndirectPower(xCoord, yCoord, zCoord) > 0 : false;
     }
 
     /**

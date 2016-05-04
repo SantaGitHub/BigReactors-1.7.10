@@ -61,7 +61,7 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
     public boolean isDirty = false;
 
     public static ResourceLocation getSoundFor(String sound) {
-        return sound == null ? null : new ResourceLocation("bigreactors" + ":" + sound);
+        return sound == null ? null : new ResourceLocation(BigReactors.CHANNEL + ":" + sound);
     }
 
     public TileEntityBasicMachine(SlotDefinition slotDefinition) {
@@ -69,6 +69,7 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
         facing = 3;
 
         inventory = new ItemStack[slotDefinition.getNumSlots()];
+        redstoneControlMode = RedstoneControlMode.IGNORE;
         soundRes = getSoundFor(getSoundName());
 
         allSlots = new int[slotDefinition.getNumSlots()];
@@ -134,6 +135,15 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
         return slotDefinition;
     }
 
+    public boolean isValidUpgrade(ItemStack itemstack) {
+        for (int i = slotDefinition.getMinUpgradeSlot(); i <= slotDefinition.getMaxUpgradeSlot(); i++) {
+            if(isItemValidForSlot(i, itemstack)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isValidInput(ItemStack itemstack) {
         for (int i = slotDefinition.getMinInputSlot(); i <= slotDefinition.getMaxInputSlot(); i++) {
             if(isItemValidForSlot(i, itemstack)) {
@@ -154,9 +164,7 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
 
     @Override
     public final boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        /*if(slotDefinition.isUpgradeSlot(i)) {
-            return itemstack != null && itemstack.getItem() == EnderIO.itemBasicCapacitor && itemstack.getItemDamage() > 0;
-        }*/
+
         return isMachineItemValidForSlot(i, itemstack);
     }
 
@@ -237,6 +245,7 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
         boolean prevRedCheck = redstoneCheckPassed;
         if(redstoneStateDirty) {
             redstoneCheckPassed = RedstoneControlMode.isConditionMet(redstoneControlMode, this);
+            BRLog.info("restoneCheck: " + redstoneCheckPassed);
             redstoneStateDirty = false;
         }
 
@@ -355,7 +364,7 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
 
         boolean hasSpace = false;
         for (int slot = slotDefinition.minInputSlot; slot <= slotDefinition.maxInputSlot && !hasSpace; slot++) {
-            hasSpace = inventory[slot] == null || inventory[slot].stackSize < Math.min(inventory[slot].getMaxStackSize(), getInventoryStackLimit(slot));
+            hasSpace = inventory[slot] == null ? true : inventory[slot].stackSize < Math.min(inventory[slot].getMaxStackSize(), getInventoryStackLimit(slot));
         }
         if(!hasSpace) {
             return false;
@@ -525,7 +534,7 @@ public abstract class TileEntityBasicMachine extends TileEntityBR implements ISi
         }
 
         NBTTagCompound root = stack.stackTagCompound;
-        root.setBoolean("br.abstractMachine", true);
+        root.setBoolean("eio.abstractMachine", true);
         writeCommon(root);
 
         String name;

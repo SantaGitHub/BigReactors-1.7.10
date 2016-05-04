@@ -148,6 +148,8 @@ public class BigReactors {
     public static float machineSoundVolume = 1.0f;
     public static boolean machineSoundsEnabled = true;
 
+    public static boolean allowExternalTickSpeedUp = false;
+
     // Machines
     public static BlockLiquidizer blockLiquidizer;
 	
@@ -215,7 +217,9 @@ public class BigReactors {
             //Sound configs
             machineSoundVolume = (float)BRConfig.CONFIGURATION.get("General", "machineSoundVolume", machineSoundVolume, "Volume of machines' sounds").getDouble(1.0);
             machineSoundsEnabled = BRConfig.CONFIGURATION.get("General", "enableMachineSound", machineSoundsEnabled, "If true, machines will make sounds").getBoolean(machineSoundsEnabled);
-			
+
+            allowExternalTickSpeedUp = BRConfig.CONFIGURATION.get("General", "allowExternalTickSpeedUp", allowExternalTickSpeedUp, "Prevent tick speedup (i.e. torcherino) on any TE that uses the base TE class from EnderCore").getBoolean(allowExternalTickSpeedUp);
+
 			MultiblockTurbine.inputFluidPerBlade = (int) Math.floor(MultiblockTurbine.inputFluidPerBlade * turbineFluidPerBladeMultiplier);
 			MultiblockTurbine.inductorBaseDragCoefficient *= turbineCoilDragMultiplier;
 

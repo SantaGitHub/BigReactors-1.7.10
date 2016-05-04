@@ -15,9 +15,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 public abstract class TileEntityPoweredBasicMachine extends TileEntityBasicMachine implements IInternalPoweredTile{
 
     // Power
-    private int maxEnergyReceived = 100;
-    private int maxEnergyStored = 10000;
-    private int maxEnergyExtracted = 80;
+    public int maxEnergyReceived = 100;
+    public int maxEnergyStored = 10000;
+    public int maxEnergyExtracted = 80;
 
     private int storedEnergyRF;
     protected float lastSyncPowerStored = -1;
@@ -94,17 +94,6 @@ public abstract class TileEntityPoweredBasicMachine extends TileEntityBasicMachi
 
     public int getPowerUsePerTick() {
         return maxEnergyExtracted;
-    }
-
-    @Override
-    public void setInventorySlotContents(int slot, ItemStack contents) {
-        super.setInventorySlotContents(slot, contents);
-    }
-
-    @Override
-    public ItemStack decrStackSize(int fromSlot, int amount) {
-        ItemStack res = super.decrStackSize(fromSlot, amount);
-        return res;
     }
 
     //--------- NBT

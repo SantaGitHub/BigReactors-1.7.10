@@ -42,6 +42,7 @@ public class RecipeConfigParser extends DefaultHandler {
     public static final String AT_DUMP_ITEMS = "modObjects";
     public static final String AT_ORE_DICT = "oreDictionary";
     public static final String AT_ENERGY_COST = "energyCost";
+    public static final String AT_BONUS_TYPE = "bonusType";
     public static final String AT_ITEM_META = "itemMeta";
     public static final String AT_ITEM_NAME = "itemName";
     public static final String AT_MOD_ID = "modID";
@@ -51,7 +52,6 @@ public class RecipeConfigParser extends DefaultHandler {
     public static final String AT_SLOT = "slot";
     public static final String AT_CHANCE = "chance";
     public static final String AT_EXP = "exp";
-    public static final String AT_ALLOW_MISSING = "allowMissing";
 
     // Log prefix
     private static final String LP = "RecipeParser: ";
@@ -245,7 +245,7 @@ public class RecipeConfigParser extends DefaultHandler {
             }
             recipe = recipeGroup.createRecipe(name);
             recipe.setEnergyRequired(getIntValue(AT_ENERGY_COST, attributes, 400));
-            recipe.setAllowMissing(getBooleanValue(AT_ALLOW_MISSING, attributes, false));
+            recipe.setBonusType(getEnumValue(AT_BONUS_TYPE, attributes, RecipeBonusType.class, RecipeBonusType.MULTIPLY_OUTPUT));
             return;
         }
 
@@ -259,7 +259,7 @@ public class RecipeConfigParser extends DefaultHandler {
 
         if(recipe == null) {
             if(!inCustomHandler) {
-               BRLog.warning(LP + "Found element <" + localName + "> with no recipe decleration.");
+                BRLog.warning(LP + "Found element <" + localName + "> with no recipe decleration.");
             }
             return;
         }
@@ -318,7 +318,7 @@ public class RecipeConfigParser extends DefaultHandler {
 
     //TODO: What a hack!
     private boolean isElementRoot(String str) {
-        return "AlloySmelterRecipes".equals(str) || "SAGMillRecipes".equals(str) || "VatRecipes".equals(str) || "SliceAndSpliceRecipes".equals(str);
+        return "LiquidizerRecipes".equals(str);
     }
 
     private void addOutputStack(Attributes attributes) {
@@ -332,10 +332,8 @@ public class RecipeConfigParser extends DefaultHandler {
 
     private void addInputStack(Attributes attributes) {
         RecipeInput stack = getItemStack(attributes);
-        if (stack == null) {
-            if (!recipe.allowMissing()) {
-                recipe.invalidate();
-            }
+        if(stack == null) {
+            recipe.invalidate();
             return;
         }
         recipe.addInput(stack);

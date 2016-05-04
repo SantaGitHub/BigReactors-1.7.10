@@ -1,5 +1,6 @@
 package erogenousbeef.bigreactors.common.tileentity.liquidizer;
 
+import erogenousbeef.bigreactors.ModObject;
 import erogenousbeef.bigreactors.common.recipe.AbstractMachineRecipe;
 import erogenousbeef.bigreactors.common.recipe.IRecipe;
 import erogenousbeef.bigreactors.common.recipe.MachineRecipeInput;
@@ -13,7 +14,7 @@ public class LiquidizerMachineRecipe extends AbstractMachineRecipe {
 
     @Override
     public String getUid() {
-        return "StillRecipe";
+        return "LiquidizerRecipe";
     }
 
     @Override
@@ -31,7 +32,7 @@ public class LiquidizerMachineRecipe extends AbstractMachineRecipe {
 
     @Override
     public String getMachineName() {
-        return "blockLiquidizer";
+        return ModObject.blockLiquidizer.unlocalisedName;
     }
 
     @Override

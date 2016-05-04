@@ -3,10 +3,7 @@ package erogenousbeef.bigreactors.common.tileentity.liquidizer;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import erogenousbeef.bigreactors.common.BRLog;
-import erogenousbeef.bigreactors.common.recipe.IRecipe;
-import erogenousbeef.bigreactors.common.recipe.MachineRecipeInput;
-import erogenousbeef.bigreactors.common.recipe.RecipeInput;
-import erogenousbeef.bigreactors.common.recipe.RecipeOutput;
+import erogenousbeef.bigreactors.common.recipe.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -42,7 +39,7 @@ public class LiquidizerRecipe implements IRecipe {
         }
 
         if (outputFluidStack == null) {
-            BRLog.warning("Ignoring invalid VAT recipe without output fluid");
+            BRLog.warning("Ignoring invalid Liquidizer recipe without output fluid");
         } else {
 
             requiredItems = 1;
@@ -89,7 +86,7 @@ public class LiquidizerRecipe implements IRecipe {
             }
 
             if (inputFluidStack == null) {
-                BRLog.warning("Ignoring invalid VAT recipe without input fluid/stacks");
+                BRLog.warning("Ignoring invalid Liquidizer recipe without input fluid");
             }
         }
 
@@ -125,6 +122,11 @@ public class LiquidizerRecipe implements IRecipe {
     @Override
     public List<ItemStack> getInputStacks() {
         return inputStacks;
+    }
+
+    @Override
+    public RecipeBonusType getBonusType() {
+        return RecipeBonusType.NONE;
     }
 
     private RecipeInput getRecipeInput(int slot, ItemStack item) {

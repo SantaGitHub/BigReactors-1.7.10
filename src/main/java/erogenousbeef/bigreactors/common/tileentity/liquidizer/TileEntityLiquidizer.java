@@ -1,5 +1,7 @@
 package erogenousbeef.bigreactors.common.tileentity.liquidizer;
 
+import erogenousbeef.bigreactors.ModObject;
+import erogenousbeef.bigreactors.common.BRLog;
 import erogenousbeef.bigreactors.common.machine.IPoweredTask;
 import erogenousbeef.bigreactors.common.recipe.IMachineRecipe.ResultStack;
 import erogenousbeef.bigreactors.common.recipe.MachineRecipeInput;
@@ -45,7 +47,7 @@ public class TileEntityLiquidizer extends TileEntityPoweredTask implements IFlui
 
     @Override
     public String getMachineName() {
-        return "Liquidizer";
+        return ModObject.blockLiquidizer.unlocalisedName;
     }
 
     @Override

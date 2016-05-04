@@ -3,6 +3,7 @@ package erogenousbeef.bigreactors.common.machine;
 import com.google.common.collect.Lists;
 import erogenousbeef.bigreactors.client.gui.base.IconBR;
 import erogenousbeef.bigreactors.common.BRLoader;
+import erogenousbeef.bigreactors.common.BRLog;
 import erogenousbeef.bigreactors.core.client.gui.button.CycleButton.ICycleEnum;
 import erogenousbeef.bigreactors.core.client.render.IWidgetIcon;
 import net.minecraft.tileentity.TileEntity;
@@ -55,6 +56,7 @@ public enum RedstoneControlMode implements ICycleEnum {
     }
 
     public static boolean isConditionMet(RedstoneControlMode redstoneControlMode, TileEntity te) {
+
         return isConditionMet(redstoneControlMode, te.getWorldObj().getStrongestIndirectPower(te.xCoord, te.yCoord, te.zCoord));
     }
 

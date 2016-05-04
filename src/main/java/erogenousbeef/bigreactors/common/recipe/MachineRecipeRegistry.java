@@ -1,5 +1,7 @@
 package erogenousbeef.bigreactors.common.recipe;
 
+import erogenousbeef.bigreactors.common.BRLog;
+
 import java.util.*;
 
 public class MachineRecipeRegistry {
@@ -18,6 +20,9 @@ public class MachineRecipeRegistry {
             res = new LinkedHashMap<String, IMachineRecipe>();
             machineRecipes.put(machineName, res);
         }
+        BRLog.info("res: " + res);
+        BRLog.info("machineRecipe: " + machineRecipes);
+
         return res;
     }
 

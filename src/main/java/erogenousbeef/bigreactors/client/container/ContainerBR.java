@@ -72,10 +72,6 @@ public class ContainerBR <T extends IInventory> extends Container {
         return new Point(8, 84);
     }
 
-    public Point getUpgradeOffset() {
-        return new Point(12, 60);
-    }
-
     @Nonnull
     public T getInv() {
         return inv;

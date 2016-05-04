@@ -140,7 +140,7 @@ public abstract class BlockBase extends Block {
     protected void processDrop(World world, int x, int y, int z, @Nullable TileEntityBase te, ItemStack drop) {
     }
 
-    protected TileEntityBase getTileEntityEio(IBlockAccess world, int x, int y, int z) {
+    protected TileEntityBase getTileEntityBR(IBlockAccess world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         if (teClass.isInstance(te)) {
             return (TileEntityBase) te;
@@ -149,7 +149,7 @@ public abstract class BlockBase extends Block {
     }
 
     protected boolean shouldDoWorkThisTick(World world, int x, int y, int z, int interval) {
-        TileEntityBase te = getTileEntityEio(world, x, y, z);
+        TileEntityBase te = getTileEntityBR(world, x, y, z);
         if (te == null) {
             return world.getTotalWorldTime() % interval == 0;
         } else {
@@ -158,7 +158,7 @@ public abstract class BlockBase extends Block {
     }
 
     protected boolean shouldDoWorkThisTick(World world, int x, int y, int z, int interval, int offset) {
-        TileEntityBase te = getTileEntityEio(world, x, y, z);
+        TileEntityBase te = getTileEntityBR(world, x, y, z);
         if (te == null) {
             return (world.getTotalWorldTime() + offset) % interval == 0;
         } else {

@@ -19,6 +19,8 @@ public interface IRecipe {
 
     List<FluidStack> getInputFluidStacks();
 
+    RecipeBonusType getBonusType();
+
     boolean isInputForRecipe(MachineRecipeInput... inputs);
 
     boolean isValidInput(int slotNumber, ItemStack item);
