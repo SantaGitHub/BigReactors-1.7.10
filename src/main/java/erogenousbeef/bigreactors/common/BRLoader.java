@@ -119,49 +119,5 @@ public class BRLoader {
 	// GAME EVENT HANDLERS
 	// FORGE EVENT HANDLERS
 
-	// Handle bucketing of reactor fluids
-	@SubscribeEvent
-    public void onBucketFill(FillBucketEvent e)
-    {
-        if(e.current.getItem() != Items.bucket)
-        {
-            return;
-        }
-        ItemStack filledBucket = fillBucket(e.world, e.target);
-        if(filledBucket != null)
-        {
-            e.world.setBlockToAir(e.target.blockX, e.target.blockY, e.target.blockZ);
-            e.result = filledBucket;
-            e.setResult(Result.ALLOW);
-        }
-    }
-    
-    private ItemStack fillBucket(World world, MovingObjectPosition mop)
-    {
-        Block block = world.getBlock(mop.blockX, mop.blockY, mop.blockZ);
-        if(block == BigReactors.fluidCyaniteStill) return new ItemStack(BigReactors.fluidCyaniteBucketItem);
-        else if(block == BigReactors.fluidYelloriumStill) return new ItemStack(BigReactors.fluidYelloriumBucketItem);
-        else return null;
-    }
 
-    @EventHandler
-    public void onImc(FMLInterModComms.IMCEvent evt) {
-        processImc(evt.getMessages());
-    }
-
-    private void processImc(ImmutableList<FMLInterModComms.IMCMessage> messages) {
-        for (FMLInterModComms.IMCMessage msg : messages) {
-            String key = msg.key;
-            try {
-                if(msg.isStringMessage()) {
-                    String value = msg.getStringValue();
-                    if (IMC.LIQUIDIZER_RECIPE.equals(key)) {
-                        LiquidizerRecipeManager.getInstance().addCustomRecipes(value);
-                    }
-                }
-            } catch (Exception e) {
-                BRLog.error("Error occured handling IMC message " + key + " from " + msg.getSender());
-            }
-        }
-    }
 }

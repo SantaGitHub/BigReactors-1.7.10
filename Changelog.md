@@ -1,25 +1,32 @@
 Big Reactors Changelog
 ======================
 
-Current Release (0.4.4-UNOFFICIAL)
+Current Release (0.4.5A)
 --------------------------------
+- Removed yelloriumBlock as ReactorFuel as workaround for fuel duplication bug
+
+Older Releases
+--------------
+### 0.4.5
+--------------------------------
+- Improved Russian lang. Thanks zlotnleo!
+- Added liquid Helium
+- Added Radiation Helper TE existance check --> less lag
+- Bugfix: ControlRod ClassCastException
+
+### 0.4.4-UNOFFICIAL
 - **Dependency**: Forge dependency update to **10.13.4.1614**
 - **Dependency**: CoFHCore dependency update to **3.1.1-324**
 - **Dependency**: Buildcraft dependency update to **7.1.14**
 - Bugfix: Fixed problem with Forge's new Fluid Handling
 - Cleaned up some outdated functions and imports
 
-Older Releases
---------------
 ### 0.4.3A
 - **Dependency**: Forge dependency update to **10.13.2.1291**
 - **Dependency**: CoFHCore dependency update to **3.0.0RC7**
 - Bugfix: Fixed a number of crashes and corrupt states which could occur when breaking blocks on a running reactor. This occurred most commonly when breaking multiple blocks with a Tinker's Construct hammer.
 - Bugfix: Fixed reactorPowerProductionMultiplier and turbinePowerProductionMultiplier using the config value for powerProductionMultiplier, causing exponential output changes when changing powerProductionMultiplier.
 - Bugfix: Valentine's Day easter egg now correctly fires on Valentine's day, not a month later. Thanks RAnders00!
-
-Older Releases
---------------
 
 ### 0.4.2A/0.4.2A2
 - Enhancement: Added setControlRodName, getControlRodLocation Computer methods

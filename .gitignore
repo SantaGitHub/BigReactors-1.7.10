@@ -8,6 +8,7 @@
 /config
 options.txt
 /saves
+/libs
 usernamecache.json
 
 # Eclipse
