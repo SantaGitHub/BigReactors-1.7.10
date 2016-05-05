@@ -66,9 +66,7 @@ public abstract class TileEntityInventory extends TileEntityBeefBase implements 
 				NBTTagCompound itemTag = (NBTTagCompound)tagList.getCompoundTagAt(i);
 				int slot = itemTag.getByte("Slot") & 0xff;
 				if(slot >= 0 && slot <= _inventories.length) {
-					ItemStack itemStack = new ItemStack((Block)null,0,0);
-					itemStack.readFromNBT(itemTag);
-					_inventories[slot] = itemStack;
+					_inventories[slot] = ItemStack.loadItemStackFromNBT(itemTag); // Robotia -- this is the correct way to load NBT..
 				}
 			}
 		}

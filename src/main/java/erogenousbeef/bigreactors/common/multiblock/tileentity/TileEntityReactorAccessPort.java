@@ -207,11 +207,15 @@ public class TileEntityReactorAccessPort extends TileEntityReactorPart implement
 			NBTTagList tagList = tag.getTagList("Items", 10);
 			for(int i = 0; i < tagList.tagCount(); i++) {
 				NBTTagCompound itemTag = (NBTTagCompound)tagList.getCompoundTagAt(i);
-				int slot = itemTag.getByte("Slot") & 0xff;
+				int tag = 0;
+				if (tag.hasKey("Slot"))
+					slot = itemTag.getByte("Slot") & 0xff;
+				else if(tag.hasKey("SlotB") && tag.getBoolean("SlotB")) // Robotia -- new space-saving method of slot info storage
+				{
+					slot = 1;
+				}
 				if(slot >= 0 && slot <= _inventories.length) {
-					ItemStack itemStack = new ItemStack((Block)null,0,0);
-					itemStack.readFromNBT(itemTag);
-					_inventories[slot] = itemStack;
+					_inventories[slot] = ItemStack.loadItemStackFromNBT(itemTag);// Robotia -- this is the correct way to read in NBT
 				}
 			}
 		}
@@ -229,7 +233,11 @@ public class TileEntityReactorAccessPort extends TileEntityReactorPart implement
 		for(int i = 0; i < _inventories.length; i++) {
 			if((_inventories[i]) != null) {
 				NBTTagCompound itemTag = new NBTTagCompound();
-				itemTag.setByte("Slot", (byte)i);
+				if(i == 0) // Robotia -- there are only two slots in this inventory...
+					itemTag.setBoolean("SlotB",false); // Robotia -- we write false here because in C++ false == 0 and true == 0 so it is generally known to be this
+				else
+					itemTag.setBoolean("SlotB",true);
+//				itemTag.setByte("Slot", (byte)i); // Robotia -- this could make mistakes with the mask in reading in?
 				_inventories[i].writeToNBT(itemTag);
 				tagList.appendTag(itemTag);
 			}
