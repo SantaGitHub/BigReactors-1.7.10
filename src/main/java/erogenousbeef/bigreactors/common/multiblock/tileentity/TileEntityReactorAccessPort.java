@@ -215,7 +215,14 @@ public class TileEntityReactorAccessPort extends TileEntityReactorPart implement
 					slot = 1;
 				}
 				if(slot >= 0 && slot <= _inventories.length) {
-					_inventories[slot] = ItemStack.loadItemStackFromNBT(itemTag);// Robotia -- this is the correct way to read in NBT
+					ItemStack stack = ItemStack.loadItemStackFromNBT(itemTag);// Robotia -- this is the correct way to read in NBT
+					if(!isItemValidForSlot(slot,stack))
+					{
+						if(slot == 1)slot--;
+						else if(slot == 0)slot++;
+					}
+					if(_inventories[slot] == null)
+						_inventories[slot] = stack;
 				}
 			}
 		}
