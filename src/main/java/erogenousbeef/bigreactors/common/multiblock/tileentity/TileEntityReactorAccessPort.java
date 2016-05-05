@@ -208,9 +208,9 @@ public class TileEntityReactorAccessPort extends TileEntityReactorPart implement
 			for(int i = 0; i < tagList.tagCount(); i++) {
 				NBTTagCompound itemTag = (NBTTagCompound)tagList.getCompoundTagAt(i);
 				int slot = 0;
-				if (tag.hasKey("Slot"))
+				if (itemTag.hasKey("Slot"))
 					slot = itemTag.getByte("Slot") & 0xff;
-				else if(tag.hasKey("SlotB") && tag.getBoolean("SlotB")) // Robotia -- new space-saving method of slot info storage
+				else if(itemTag.hasKey("SlotB") && itemTag.getBoolean("SlotB")) // Robotia -- new space-saving method of slot info storage
 				{
 					slot = 1;
 				}
