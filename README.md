@@ -10,8 +10,7 @@ For near-future plans and development status, see the Roadmap file.
 
 Big Reactors has an official website at [www.big-reactors.com](http://www.big-reactors.com)
 
-As erogenousbeef isn't around at the time, I forked his github repo an will do my best to maintain and update his mod.
-Maybe I will try to add some of the features he has written into his Roadmap.
+As erogenousbeef isn't around at the time, we forked his github repo an will do our best to maintain and update his mod.
 
 **In order to play you will need a version of CoFHCore in your mods folder**
 

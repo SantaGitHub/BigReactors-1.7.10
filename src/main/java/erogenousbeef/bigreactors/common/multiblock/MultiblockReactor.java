@@ -256,10 +256,6 @@ public class MultiblockReactor extends RectangularMultiblockControllerBase imple
 			throw new MultiblockValidationException("Not enough control rods. Reactors require at least 1.");
 		}
 		
-		if(attachedControllers.size() < 1) {
-			throw new MultiblockValidationException("Not enough controllers. Reactors require at least 1.");
-		}
-		
 		super.isMachineWhole();
 	}
 
