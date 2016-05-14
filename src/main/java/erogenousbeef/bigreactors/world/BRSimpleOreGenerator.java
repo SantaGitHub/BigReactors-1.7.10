@@ -86,35 +86,13 @@ public class BRSimpleOreGenerator extends WorldGenMinable {
 	 */
 	public boolean shouldGenerateInWorld(World world) {
 		IChunkProvider chunkProvider = world.getChunkProvider();
-		if(dimensionBlacklist.contains(world.provider.dimensionId)) {
-			return false;
-		}
-		else if(chunkProvider instanceof ChunkProviderHell) {
-			return false;
-		}
-		else if(chunkProvider instanceof ChunkProviderEnd) {
-			return false;
-		}
-
-		return true;
+		return ! ( (chunkProvider instanceof ChunkProviderHell) || (chunkProvider instanceof ChunkProviderEnd) || (dimensionBlacklist.contains(world.provider.dimensionId)) );
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if(o instanceof BRSimpleOreGenerator) {
-			BRSimpleOreGenerator other = (BRSimpleOreGenerator)o;
-			if(this.blockToGenerate != null) {
-				return this.blockToGenerate == other.blockToGenerate && this.blockToGenerateMetadata == other.blockToGenerateMetadata;
-			}
-			else if(other.blockToGenerate != null) {
-				return false;
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			return false;
-		}
+		if( o == null || !(o instanceof BRSimpleOreGenerator) ) return false;
+		BRSimpleOreGenerator other = (BRSimpleOreGenerator)o;
+		return this.blockToGenerate == other.blockToGenerate && this.blockToGenerateMetadata == other.blockToGenerateMetadata;
 	}
 }

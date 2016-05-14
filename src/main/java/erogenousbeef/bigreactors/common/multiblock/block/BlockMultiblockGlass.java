@@ -2,6 +2,7 @@ package erogenousbeef.bigreactors.common.multiblock.block;
 
 import java.util.List;
 
+import erogenousbeef.bigreactors.common.BRLog;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -56,13 +57,18 @@ public class BlockMultiblockGlass extends BlockContainer {
 		case METADATA_TURBINE:
 			return new TileEntityTurbinePartGlass();
 		default:
-			throw new IllegalArgumentException("Unrecognized metadata");
+			BRLog.error("BigReactors found unrecognized metadata for glass, assuming it is reactor glass!");
+			return new TileEntityReactorGlass();
 		}
 	}
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
     {
+		if(stack.getItemDamage() > subBlocks.length - 1 || stack.getItemDamage() < 0) {
+			BRLog.error("Attempted to place a BigReactor glass with invalid metadata!");
+			return;
+		}
         world.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
     }
 
