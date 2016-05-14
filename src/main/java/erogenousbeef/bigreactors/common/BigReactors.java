@@ -465,9 +465,16 @@ public class BigReactors {
 			GameRegistry.registerTileEntity(TileEntityCyaniteReprocessor.class, "BRCyaniteReprocessor");
 			
 			GameRegistry.registerTileEntity(TileEntityReactorControlRod.class, "BRReactorControlRod");
-			GameRegistry.registerTileEntity(TileEntityReactorRedNetPort.class, "BRReactorRedNetPort");
+
+			if(Loader.isModLoaded("MineFactoryReloaded")) {
+				GameRegistry.registerTileEntity(TileEntityReactorRedNetPort.class, "BRReactorRedNetPort");
+			}
+
+			if(Loader.isModLoaded("ComputerCraft") || Loader.isModLoaded("OpenComputers")) {
+				GameRegistry.registerTileEntity(TileEntityReactorComputerPort.class, "BRReactorComputerPort");
+			}
+
 			GameRegistry.registerTileEntity(TileEntityReactorRedstonePort.class,"BRReactorRedstonePort");
-			GameRegistry.registerTileEntity(TileEntityReactorComputerPort.class, "BRReactorComputerPort");
 			GameRegistry.registerTileEntity(TileEntityReactorCoolantPort.class, "BRReactorCoolantPort");
 			GameRegistry.registerTileEntity(TileEntityReactorCreativeCoolantPort.class, "BRReactorCreativeCoolantPort");
 
