@@ -595,8 +595,15 @@ public class BigReactors {
 			OreDictionary.registerOre("reactorCasing", BigReactors.blockReactorPart.getReactorCasingItemStack());
 			OreDictionary.registerOre("reactorController", BigReactors.blockReactorPart.getReactorControllerItemStack());
 			OreDictionary.registerOre("reactorPowerTap", BigReactors.blockReactorPart.getReactorPowerTapItemStack());
-			OreDictionary.registerOre("reactorRedNetPort", BigReactors.blockReactorPart.getRedNetPortItemStack());
-			OreDictionary.registerOre("reactorComputerPort", BigReactors.blockReactorPart.getComputerPortItemStack());
+
+			if(Loader.isModLoaded("MineFactoryReloaded")) {
+				OreDictionary.registerOre("reactorRedNetPort", BigReactors.blockReactorPart.getRedNetPortItemStack());
+			}
+
+			if(Loader.isModLoaded("ComputerCraft") || Loader.isModLoaded("OpenComputers")) {
+				OreDictionary.registerOre("reactorComputerPort", BigReactors.blockReactorPart.getComputerPortItemStack());
+			}
+
 			OreDictionary.registerOre("reactorCoolantPort", BigReactors.blockReactorPart.getCoolantPortItemStack());
 			OreDictionary.registerOre("reactorControlRod", BigReactors.blockReactorPart.getControlRodItemStack());
 
